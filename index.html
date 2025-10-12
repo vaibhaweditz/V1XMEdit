@@ -70,6 +70,9 @@
     .fade-up.inview{opacity:1;transform:none}
 
     @media(max-width:600px){header{padding:12px 18px}.hero{padding-top:110px}.card{height:160px}}
+    <!-- AOS (Animate On Scroll) -->
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   </style>
 </head>
 <body>
@@ -99,6 +102,12 @@
         <div class="cta">
           <a class="btn primary" href="#portfolio">View My Work</a>
           <a class="btn" href="#contact">Hire Me</a>
+          <section class="hero" data-aos="fade-down">
+  <h1 data-aos="fade-up">V1XM EDITZ</h1>
+  <p data-aos="fade-up" data-aos-delay="100">
+    Cinematic Video Editor | Portfolio
+  </p>
+</section>
         </div>
       </div>
     </section>
@@ -145,7 +154,17 @@
             <div class="meta"><h4>Highlight — Clip 6</h4></div>
             <div class="play"><div class="triangle"></div></div>
           </a>
+<section class="portfolio" data-aos="fade-right">
+  <h2 data-aos="fade-up">My Works</h2>
 
+  <div class="portfolio-item" data-aos="zoom-in">
+    <img src="thumb1.jpg" alt="Edit 1">
+  </div>
+
+  <div class="portfolio-item" data-aos="zoom-in" data-aos-delay="100">
+    <img src="thumb2.jpg" alt="Edit 2">
+  </div>
+</section>
         </div>
       </div>
     </section>
@@ -189,6 +208,17 @@
             </div>
 
             <p id="form-status" style="margin-top:12px;color:var(--muted);font-size:14px"></p>
+            <section class="contact" data-aos="fade-left">
+  <h2 data-aos="fade-up">Hire Me</h2>
+
+  <form data-aos="zoom-in">
+    <input type="text" placeholder="Your Name" required>
+    <input type="email" placeholder="Your Email" required>
+    <input type="text" placeholder="WhatsApp Number" required>
+    <textarea placeholder="Your Message"></textarea>
+    <button type="submit">Send Message</button>
+  </form>
+</section>
           </form>
         </div>
 
@@ -280,6 +310,14 @@
   fetch("footer.html")
     .then(res => res.text())
     .then(data => document.getElementById("footer").innerHTML = data);
+</script>
+<script>
+  AOS.init({
+    duration: 1000,  // animation speed (ms)
+    once: true,      // animation play only once
+    offset: 100,     // trigger position from bottom
+    easing: 'ease-in-out'
+  });
 </script>
 </body>
 </html>
