@@ -1,10 +1,14 @@
-/* === V1XM EDITZ Cinematic Portfolio Style === */
+/* === V1XM EDITZ | Cinematic Portfolio Style === */
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
@@ -64,6 +68,7 @@ header nav a:hover {
   align-items: center;
   flex-direction: column;
   text-align: center;
+  padding: 0 20px;
 }
 
 .hero h2 {
@@ -76,14 +81,36 @@ header nav a:hover {
   font-size: 1.2rem;
   max-width: 600px;
   margin-top: 10px;
-  opacity: 0.8;
+  opacity: 0.85;
 }
 
-/* --- Portfolio Section --- */
+/* --- Hero Buttons --- */
+.hero a {
+  display: inline-block;
+  background: transparent;
+  border: 2px solid gold;
+  color: gold;
+  padding: 12px 28px;
+  margin: 10px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.hero a:hover {
+  background: gold;
+  color: #000;
+  transform: scale(1.05);
+  box-shadow: 0 0 15px gold;
+}
+
+/* --- Section Layout --- */
 section {
   padding: 80px 10%;
 }
 
+/* --- Portfolio Grid --- */
 .portfolio-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -147,7 +174,6 @@ footer {
   padding: 30px;
   color: rgba(255, 255, 255, 0.6);
   font-size: 0.9rem;
-}
-html {
-  scroll-behavior: smooth;
+  background: rgba(0, 0, 0, 0.5);
+  border-top: 1px solid rgba(255, 215, 0, 0.2);
 }
