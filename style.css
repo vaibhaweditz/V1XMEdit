@@ -177,3 +177,31 @@ footer {
   background: rgba(0, 0, 0, 0.5);
   border-top: 1px solid rgba(255, 215, 0, 0.2);
 }
+/* --- Hero Buttons Fix --- */
+.hero-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.hero-buttons a {
+  display: inline-block;
+  background: transparent;
+  border: 2px solid gold;
+  color: gold;
+  padding: 10px 25px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  height: auto; /* Prevents stretching */
+}
+
+.hero-buttons a:hover {
+  background: gold;
+  color: #000;
+  transform: scale(1.05);
+  box-shadow: 0 0 15px gold;
+}
