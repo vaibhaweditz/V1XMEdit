@@ -234,3 +234,16 @@ footer {
   box-shadow: 0 0 20px gold;
   transform: scale(1.05);
 }
+/* === FINAL BUTTON HEIGHT FIX === */
+.btn,
+.btn.primary,
+.cta a {
+  display: inline-block !important;
+  width: auto !important;
+  height: auto !important;
+  padding: 12px 30px !important;
+  line-height: normal !important;
+  text-align: center !important;
+  border-radius: 8px !important;
+  box-sizing: border-box !important;
+}
