@@ -247,3 +247,43 @@ footer {
   border-radius: 8px !important;
   box-sizing: border-box !important;
 }
+/* --- About Section --- */
+.about {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  padding: 100px 10%;
+}
+
+.about h2 {
+  font-size: 2.5rem;
+  color: gold;
+  margin-bottom: 20px;
+}
+
+.about p {
+  max-width: 700px;
+  margin: 10px auto;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  opacity: 0.85;
+}
+
+.about .btn {
+  margin-top: 30px;
+  border: 2px solid gold;
+  color: gold;
+  text-decoration: none;
+  padding: 12px 30px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.about .btn:hover {
+  background: gold;
+  color: #000;
+  box-shadow: 0 0 15px gold;
+}
