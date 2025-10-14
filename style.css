@@ -287,3 +287,62 @@ footer {
   color: #000;
   box-shadow: 0 0 15px gold;
 }
+.about {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+  padding: 100px 24px;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.about .section-title {
+  font-size: 2.5rem;
+  color: gold;
+  margin-bottom: 20px;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+}
+
+.about .bio {
+  max-width: 800px;
+  margin: auto;
+  color: #ccc;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.about .skills {
+  margin-top: 40px;
+  text-align: left;
+  display: inline-block;
+}
+
+.about .skills h3 {
+  color: gold;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.about .skills ul {
+  list-style: none;
+  padding: 0;
+}
+
+.about .skills li {
+  background: rgba(255, 255, 255, 0.05);
+  margin: 8px 0;
+  padding: 10px 15px;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.about .skills li:hover {
+  background: rgba(255, 215, 0, 0.2);
+  transform: translateX(5px);
+}
+
+.gold {
+  color: gold;
+}
