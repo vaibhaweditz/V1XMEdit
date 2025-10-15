@@ -388,3 +388,65 @@ footer {
   font-size: 0.9rem;
   color: #ccc;
 }
+.about {
+  padding: 100px 20px;
+  text-align: center;
+  color: #fff;
+  background: #000;
+}
+
+.about .title {
+  font-size: 2.5rem;
+  color: gold;
+  margin-bottom: 20px;
+}
+
+.about .intro {
+  max-width: 800px;
+  margin: 0 auto 50px;
+  line-height: 1.7;
+  color: #ccc;
+}
+
+.about .subtitle {
+  font-size: 1.8rem;
+  color: gold;
+  margin-bottom: 40px;
+}
+
+.software-grid {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.software-card {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 25px;
+  border-radius: 15px;
+  width: 240px;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.software-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 0 25px gold;
+}
+
+.software-card img {
+  width: 70px;
+  height: 70px;
+  margin-bottom: 15px;
+}
+
+.software-card h3 {
+  color: gold;
+  margin-bottom: 8px;
+}
+
+.software-card p {
+  color: #aaa;
+  font-size: 0.9rem;
+}
