@@ -421,32 +421,62 @@ footer {
   flex-wrap: wrap;
 }
 
-.software-card {
-  background: rgba(255, 255, 255, 0.05);
-  padding: 25px;
-  border-radius: 15px;
-  width: 240px;
+.about {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  transition: transform 0.3s, box-shadow 0.3s;
+  flex-direction: column;
+  padding: 100px 24px;
+  background: rgba(0, 0, 0, 0.4);
 }
 
-.software-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 0 25px gold;
-}
-
-.software-card img {
-  width: 70px;
-  height: 70px;
-  margin-bottom: 15px;
-}
-
-.software-card h3 {
+.about .section-title {
+  font-size: 2.5rem;
   color: gold;
-  margin-bottom: 8px;
+  margin-bottom: 20px;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
 }
 
-.software-card p {
-  color: #aaa;
-  font-size: 0.9rem;
+.about .bio {
+  max-width: 800px;
+  margin: auto;
+  color: #ccc;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.about .skills {
+  margin-top: 40px;
+  text-align: left;
+  display: inline-block;
+}
+
+.about .skills h3 {
+  color: gold;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.about .skills ul {
+  list-style: none;
+  padding: 0;
+}
+
+.about .skills li {
+  background: rgba(255, 255, 255, 0.05);
+  margin: 8px 0;
+  padding: 10px 15px;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.about .skills li:hover {
+  background: rgba(255, 215, 0, 0.2);
+  transform: translateX(5px);
+}
+
+.gold {
+  color: gold;
 }
