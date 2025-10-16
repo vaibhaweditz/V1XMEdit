@@ -1,179 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About Me - V1XM Editz</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Me — V1XM EDITZ</title>
+  <link rel="stylesheet" href="style.css">
 
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
-
-  <style>
-    body {
-      background-color: #010101;
-      color: #fff;
-      font-family: 'Montserrat', sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      padding: 18px 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(8px);
-      z-index: 30;
-    }
-
-    .logo {
-      font-weight: 700;
-      color: #d4a84a;
-      letter-spacing: 2px;
-    }
-
-    nav a {
-      color: rgba(255,255,255,0.8);
-      margin-left: 20px;
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    .about {
-      padding: 120px 20px 60px;
-      text-align: center;
-      max-width: 900px;
-      margin: auto;
-    }
-
-    .about h1 {
-      font-size: 2.6rem;
-      margin-bottom: 12px;
-      color: #d4a84a;
-    }
-
-    .about p {
-      color: #aaa;
-      font-size: 1rem;
-      line-height: 1.7;
-    }
-
-    .skills {
-      margin-top: 60px;
-    }
-
-    .skills h2 {
-      font-size: 1.8rem;
-      color: #d4a84a;
-      margin-bottom: 20px;
-    }
-
-    .skill-grid {
-      display: flex;
-      justify-content: center;
-      gap: 50px;
-      flex-wrap: wrap;
-    }
-
-    .skill-item {
-      text-align: center;
-      width: 160px;
-      transition: transform 0.3s ease;
-    }
-
-    .skill-item:hover {
-      transform: translateY(-10px);
-    }
-
-    .skill-item img {
-      width: 80px;
-      height: 80px;
-      object-fit: contain;
-      margin-bottom: 10px;
-      filter: drop-shadow(0 0 10px rgba(212,168,74,0.3));
-    }
-
-    .skill-item h3 {
-      margin: 6px 0 4px;
-      font-size: 1.1rem;
-      color: #fff;
-    }
-
-    .skill-item p {
-      font-size: 0.9rem;
-      color: #9b9b9b;
-    }
-
-    footer {
-      text-align: center;
-      padding: 30px 0;
-      color: #9b9b9b;
-      font-size: 0.9rem;
-      border-top: 1px solid rgba(255,255,255,0.1);
-      margin-top: 60px;
-    }
-  </style>
+  <!-- AOS Animation Library -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 <body>
+  <!-- Background Video -->
+  <video autoplay muted loop playsinline id="bg-video">
+    <source src="bg.mp4" type="video/mp4">
+  </video>
 
+  <!-- Header (same as index) -->
   <header>
     <div class="logo">V1XM EDITZ</div>
     <nav>
       <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="index.html#portfolio">Portfolio</a>
-      <a href="index.html#contact">Contact</a>
+      <a href="about.html" class="active">About Me</a>
+      <a href="#contact">Hire Me</a>
     </nav>
   </header>
 
-  <main>
+  <!-- About Section -->
   <section class="about" data-aos="fade-up">
     <div class="container">
-      <h1 class="title">About Me</h1>
-      <p class="intro">
-        Hi, I’m <strong>Vaibhaw Singh</strong> — also known as <strong>V1XM Editz</strong>.
-        I’m a passionate <strong>video editor</strong> who transforms raw clips into
-        cinematic, story-driven visuals. My focus is on storytelling, transitions,
-        and mood-based editing that gives every video a professional edge.
+      <h2 class="section-title" data-aos="fade-up">About Me</h2>
+      <p class="bio" data-aos="fade-up" data-aos-delay="100">
+        Hey there 👋 I'm <span class="gold">Vaibhaw Singh</span>, a passionate cinematic video editor from India.  
+        I specialize in creating visually stunning edits that capture emotions, rhythm, and storytelling.  
+        Every frame I cut, color, or sync — I make sure it speaks to your audience.
       </p>
 
-      <h2 class="subtitle">🎬 Mastered Software</h2>
-
-      <div class="software-grid">
-        <div class="software-card" data-aos="fade-up" data-aos-delay="100">
-          <img src="premierepro.png" alt="Premiere Pro">
-          <h3>Premiere Pro</h3>
-          <p>Industry-standard for cinematic editing & color grading.</p>
-        </div>
-
-        <div class="software-card" data-aos="fade-up" data-aos-delay="200">
-          <img src="davinci.png" alt="DaVinci Resolve">
-          <h3>DaVinci Resolve</h3>
-          <p>Expertise in color correction and high-end video finishing.</p>
-        </div>
-
-        <div class="software-card" data-aos="fade-up" data-aos-delay="300">
-          <img src="capcut.png" alt="CapCut PC">
-          <h3>CapCut PC</h3>
-          <p>Fast-paced edits with creative transitions and effects.</p>
-        </div>
+      <div class="skills" data-aos="fade-up" data-aos-delay="200">
+        <h3>My Editing Skills</h3>
+        <ul>
+          <li>🎬 Cinematic Video Editing</li>
+          <li>🎧 Sound Design & Sync</li>
+          <li>🎨 Color Grading & LUTs</li>
+          <li>⚡ Fast-Paced Reels & YouTube Edits</li>
+          <li>🔥 Smooth Transitions & VFX Touch</li>
+        </ul>
       </div>
+
+      <a href="index.html" class="btn primary" data-aos="fade-up" data-aos-delay="300">⬅ Back to Home</a>
     </div>
   </section>
-</main>
 
+  <!-- Footer -->
   <footer>
-    <p>© 2025 V1XM Editz. All Rights Reserved.</p>
+    © 2025 V1XM EDITZ · All Rights Reserved
   </footer>
 
+  <!-- AOS Script -->
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
-    AOS.init();
+    AOS.init({
+      duration: 800,
+      once: true
+    });
   </script>
 </body>
 </html>
