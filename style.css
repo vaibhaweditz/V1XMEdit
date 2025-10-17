@@ -611,3 +611,7 @@ footer {
   color: #ffcc00;
   font-weight: 600;
 }
+nav ul li a.active {
+  color: #ff9f43;
+  border-bottom: 2px solid #ff9f43;
+}
