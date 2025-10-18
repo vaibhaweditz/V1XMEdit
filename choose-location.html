@@ -140,23 +140,44 @@
     </nav>
   </header>
 
-  <!-- Location Selection -->
-  <div class="container">
-    <h1>Choose Your Location</h1>
-    <p>Select your country to proceed with payment</p>
+  <section class="location-selection" style="text-align:center;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;background:rgba(0,0,0,0.5);color:white;">
+  <h1 data-aos="fade-up" style="margin-bottom:30px;">Choose Your Location</h1>
+  
+  <div class="location-buttons" style="display:flex;gap:20px;">
+    <div class="location-card" onclick="goToDetails('India')" 
+      style="background:rgba(255,255,255,0.1);padding:40px 60px;border-radius:15px;cursor:pointer;transition:all 0.3s ease;">
+      <h2>🇮🇳 India</h2>
+    </div>
 
-    <div class="location-cards">
-      <div class="location-card" onclick="goToDetails('india')">
-        <h3>🇮🇳 India</h3>
-        <p>Pay securely in INR</p>
-      </div>
-
-      <div class="location-card" onclick="goToDetails('foreign')">
-        <h3>🌍 Foreign</h3>
-        <p>Pay securely in USD</p>
-      </div>
+    <div class="location-card" onclick="goToDetails('Foreign')" 
+      style="background:rgba(255,255,255,0.1);padding:40px 60px;border-radius:15px;cursor:pointer;transition:all 0.3s ease;">
+      <h2>🌍 Foreign</h2>
     </div>
   </div>
+</section>
+
+<script>
+  // Card hover effect
+  document.querySelectorAll(".location-card").forEach(card => {
+    card.addEventListener("mouseover", () => {
+      card.style.transform = "scale(1.05)";
+      card.style.boxShadow = "0 0 15px rgba(255,255,255,0.3)";
+    });
+    card.addEventListener("mouseout", () => {
+      card.style.transform = "scale(1)";
+      card.style.boxShadow = "none";
+    });
+  });
+
+  // Function to go to client details page
+  function goToDetails(location) {
+    const params = new URLSearchParams(window.location.search);
+    const plan = params.get("plan");
+    localStorage.setItem("selectedPlan", plan);
+    localStorage.setItem("selectedLocation", location);
+    window.location.href = "client-details.html";
+  }
+</script>
 <!-- Footer container -->
 <div id="footer"></div>
 
