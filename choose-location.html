@@ -157,22 +157,16 @@
       </div>
     </div>
   </div>
+<!-- Footer container -->
+<div id="footer"></div>
 
-   <!-- FOOTER (Load from footer.html) -->
-  <div id="footer"></div>
-  <script>
-    fetch("footer.html")
-      .then(res => res.text())
-      .then(data => document.getElementById("footer").innerHTML = data);
+<!-- Footer import script -->
+<script>
+  fetch("footer.html")
+    .then(res => res.text())
+    .then(data => document.getElementById("footer").innerHTML = data)
+    .catch(err => console.error("Footer load error:", err));
+</script>
 
-  <script>
-    function goToDetails(location) {
-      const params = new URLSearchParams(window.location.search);
-      const plan = params.get("plan");
-      localStorage.setItem("selectedPlan", plan);
-      localStorage.setItem("selectedLocation", location);
-      window.location.href = "client-details.html";
-    }
-  </script>
 </body>
 </html>
