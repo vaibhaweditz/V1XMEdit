@@ -6,69 +6,171 @@
   <title>Choose Location | V1XM Editz</title>
   <link rel="stylesheet" href="style.css">
   <style>
+    /* Background video setup */
+    .video-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+      opacity: 0.5;
+    }
+
     body {
       margin: 0;
-      padding: 0;
-      background: url('bg.mp4') no-repeat center center fixed;
-      background-size: cover;
-      color: white;
       font-family: 'Poppins', sans-serif;
-      text-align: center;
+      color: #fff;
+      overflow-x: hidden;
+      background-color: #000;
     }
-    .container {
-      padding-top: 100px;
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 50px;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(10px);
+      z-index: 10;
     }
-    .location-btn {
-      background-color: #ffcc00;
-      color: black;
-      border: none;
-      padding: 15px 30px;
-      margin: 15px;
-      border-radius: 8px;
-      font-size: 18px;
-      cursor: pointer;
+
+    header h2 {
+      margin: 0;
+      font-size: 24px;
+      letter-spacing: 1px;
+    }
+
+    nav a {
+      color: white;
+      margin: 0 12px;
+      text-decoration: none;
       transition: 0.3s;
     }
-    .location-btn:hover {
-      background-color: #ffd633;
-      transform: scale(1.05);
+
+    nav a:hover {
+      color: #ffd700;
+    }
+
+    .container {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 120px 20px 60px;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #ddd;
+      margin-bottom: 40px;
+      font-size: 1.1rem;
+    }
+
+    /* Glass card style */
+    .location-cards {
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .location-card {
+      width: 260px;
+      height: 160px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      backdrop-filter: blur(15px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+    }
+
+    .location-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
+      border-color: #ffd700;
+    }
+
+    .location-card h3 {
+      font-size: 1.5rem;
+      margin: 0;
+    }
+
+    footer {
+      background: rgba(0, 0, 0, 0.7);
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9rem;
+      letter-spacing: 0.5px;
+      color: #ccc;
     }
   </style>
 </head>
 <body>
-   <!-- HEADER (Same as index) -->
-  <header class="main-header">
-    <div class="logo">V1XM <span>EDITZ</span></div>
+  <!-- Background Video -->
+  <video autoplay loop muted playsinline class="video-bg">
+    <source src="bg.mp4" type="video/mp4" />
+  </video>
+
+  <!-- Header -->
+  <header>
+    <h2>V1XM EDITZ</h2>
     <nav>
-      <ul>
-          <a href="index.html">Home</a></li>
-          <a href="about.html">About</a></li>
-          <a href="plans.html" class="active">Plans</a></li>
-          <a href="contact.html">contact</a></li>
-        </ul>
-      </nav>
-    </div>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="plans.html">Plans</a>
+      <a href="contact.html">Contact</a>
+    </nav>
   </header>
 
-        
+  <!-- Location Selection -->
   <div class="container">
     <h1>Choose Your Location</h1>
-    <p>Select where you're from to continue</p>
-    <button class="location-btn" onclick="goToDetails('india')">India 🇮🇳</button>
-    <button class="location-btn" onclick="goToDetails('foreign')">Foreign 🌍</button>
+    <p>Select your country to proceed with payment</p>
+
+    <div class="location-cards">
+      <div class="location-card" onclick="goToDetails('india')">
+        <h3>🇮🇳 India</h3>
+        <p>Pay securely in INR</p>
+      </div>
+
+      <div class="location-card" onclick="goToDetails('foreign')">
+        <h3>🌍 Foreign</h3>
+        <p>Pay securely in USD</p>
+      </div>
+    </div>
   </div>
-  
-   </div>
-</section>
 
-  <!-- FOOTER (Load from footer.html) -->
-  <div id="footer"></div>
+  <!-- Footer -->
+  <footer>
+    © 2025 V1XM EDITZ | All Rights Reserved
+  </footer>
+
   <script>
-    fetch("footer.html")
-      .then(res => res.text())
-      .then(data => document.getElementById("footer").innerHTML = data);
-  </script>
-
+    function goToDetails(location) {
+      const params = new URLSearchParams(window.location.search);
+      const plan = params.get("plan");
+      localStorage.setItem("selectedPlan", plan);
+      localStorage.setItem("selectedLocation", location);
+      window.location.href = "client-details.html";
+    }
   </script>
 </body>
 </html>
