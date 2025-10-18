@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Payment - V1XM Editz</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+
+  <!-- Background Video -->
+  <video autoplay loop muted playsinline id="bg-video" style="position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:-1;">
+    <source src="bg.mp4" type="video/mp4">
+  </video>
+
+  <!-- Header -->
+  <header style="text-align:center;padding:20px;background:rgba(0,0,0,0.5);color:white;">
+    <h1>V1XM Editz</h1>
+    <p>Secure Payment</p>
+  </header>
+
+  <!-- Payment Section -->
+  <section style="display:flex;justify-content:center;align-items:center;min-height:80vh;">
+    <div style="background:rgba(255,255,255,0.1);padding:30px 40px;border-radius:20px;color:white;text-align:center;width:350px;">
+      <h2>Confirm Your Payment</h2>
+      <p id="plan-name" style="margin:10px 0;font-size:1.1rem;"></p>
+      <p id="plan-price" style="font-size:1.4rem;color:#ffcc00;"></p>
+      <button id="pay-btn" style="padding:12px 25px;background:#ffcc00;border:none;border-radius:8px;font-weight:bold;color:black;cursor:pointer;margin-top:20px;">Pay Now</button>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <div id="footer"></div>
+
+  <script>
+    // Load footer
+    fetch("footer.html")
+      .then(res => res.text())
+      .then(data => document.getElementById("footer").innerHTML = data);
+
+    // Razorpay setup
+    document.addEventListener("DOMContentLoaded", () => {
+      const plan = localStorage.getItem("selectedPlan") || "Basic";
+      const location = localStorage.getItem("selectedLocation") || "India";
+
+      // 🔹 Plan-wise amount setup (in rupees)
+      const planPrices = {
+        "Basic": 299,
+        "Standard": 499,
+        "Premium": 999
+      };
+
+      // Convert to paisa for Razorpay
+      const amount = (planPrices[plan] || 299) * 100;
+
+      // Display info
+      document.getElementById("plan-name").textContent = `Plan Selected: ${plan}`;
+      document.getElementById("plan-price").textContent = `Amount: ₹${amount / 100}`;
+
+      document.getElementById("pay-btn").addEventListener("click", () => {
+        const options = {
+          key: rzp_live_GK1dNUHZFblKFZ
+          amount: amount,
+          currency: "INR",
+          name: "V1XM Editz",
+          description: `${plan} Plan Payment`,
+          image: "logo.png", // 🔹 Optional: Add your logo
+          handler: function (response) {
+            alert("✅ Payment Successful! Payment ID: " + response.razorpay_payment_id);
+            localStorage.clear();
+            window.location.href = "thankyou.html";
+          },
+          prefill: {
+            name: localStorage.getItem("clientName") || "",
+            email: localStorage.getItem("clientEmail") || "",
+            contact: localStorage.getItem("clientPhone") || ""
+          },
+          theme: {
+            color: "#ffcc00"
+          }
+        };
+        const rzp = new Razorpay(options);
+        rzp.open();
+      });
+    });
+  </script>
+</body>
+</html>
