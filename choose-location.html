@@ -158,10 +158,12 @@
     </div>
   </div>
 
-  <!-- Footer -->
-  <footer>
-    © 2025 V1XM EDITZ | All Rights Reserved
-  </footer>
+   <!-- FOOTER (Load from footer.html) -->
+  <div id="footer"></div>
+  <script>
+    fetch("footer.html")
+      .then(res => res.text())
+      .then(data => document.getElementById("footer").innerHTML = data);
 
   <script>
     function goToDetails(location) {
