@@ -3,20 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Choose Location - V1XM Editz</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+  <title>Choose Location - V1XMeditz</title>
+
+  <!-- Header / Footer CSS -->
+  <link rel="stylesheet" href="header.css" />
+  <link rel="stylesheet" href="footer.css" />
+
   <style>
     body {
       margin: 0;
-      font-family: 'Poppins', sans-serif;
-      color: #fff;
-      background-color: #000;
+      font-family: "Poppins", sans-serif;
       overflow-x: hidden;
+      color: #fff;
+      position: relative;
+      height: 100vh;
     }
 
-    /* Background Video */
-    #bg-video {
+    /* Background video */
+    video.bg-video {
       position: fixed;
       top: 0;
       left: 0;
@@ -24,162 +28,109 @@
       height: 100%;
       object-fit: cover;
       z-index: -1;
-      opacity: 0.4;
+      filter: brightness(60%);
     }
 
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      padding: 18px 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(8px);
-      z-index: 30;
-    }
-
-    .logo {
-      font-weight: 700;
-      color: #d4a84a;
-      letter-spacing: 2px;
-    }
-
-    nav a {
-      color: rgba(255,255,255,0.85);
-      margin-left: 20px;
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.3s ease;
-    }
-
-    nav a:hover {
-      color: #d4a84a;
-    }
-
-    .choose-section {
-      min-height: 100vh;
+    /* Content section */
+    .choose-container {
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       text-align: center;
-      padding: 120px 20px 80px;
+      height: 90vh;
+      z-index: 2;
+      position: relative;
     }
 
-    .choose-section h1 {
-      font-size: 2.4rem;
-      color: #d4a84a;
-      margin-bottom: 20px;
-    }
-
-    .choose-section p {
-      color: #bbb;
-      font-size: 1.1rem;
+    .choose-container h1 {
+      font-size: 3rem;
       margin-bottom: 40px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
     }
 
-    .options {
+    .location-options {
       display: flex;
+      gap: 40px;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 40px;
     }
 
-    .option {
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.2);
-      padding: 30px 50px;
-      border-radius: 15px;
+    .location-box {
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 40px 60px;
       cursor: pointer;
       transition: all 0.3s ease;
-      width: 220px;
+      backdrop-filter: blur(5px);
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
     }
 
-    .option:hover {
-      background: rgba(212,168,74,0.15);
-      border-color: #d4a84a;
-      transform: translateY(-6px);
+    .location-box:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.05);
     }
 
-    .option h2 {
-      color: #fff;
+    .location-box h2 {
+      font-size: 2rem;
       margin-bottom: 10px;
     }
 
-    .option p {
-      color: #aaa;
-      font-size: 0.9rem;
+    .location-box p {
+      font-size: 1rem;
+      opacity: 0.9;
     }
 
     footer {
-      text-align: center;
-      padding: 30px 0;
-      color: #9b9b9b;
-      font-size: 0.9rem;
-      border-top: 1px solid rgba(255,255,255,0.1);
-      background: rgba(0,0,0,0.7);
-      backdrop-filter: blur(6px);
+      position: relative;
+      z-index: 2;
     }
   </style>
 </head>
-<body>
 
-  <!-- Background Video -->
-  <video autoplay loop muted playsinline id="bg-video">
-    <source src="bg.mp4" type="video/mp4">
+<body>
+  <!-- Background video -->
+  <video autoplay loop muted playsinline class="bg-video">
+    <source src="bg.mp4" type="video/mp4" />
   </video>
 
-  <!-- Header -->
-  <header>
-    <div class="logo">V1XM EDITZ</div>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="plans.html">Plans</a>
-      <a href="index.html#contact">Contact</a>
-    </nav>
-  </header>
+  <!-- Header (loaded dynamically) -->
+  <div id="header-placeholder"></div>
 
-  <!-- Choose Location Section -->
-  <section class="choose-section" data-aos="fade-up">
-    <h1 data-aos="fade-up" data-aos-delay="100">Choose Your Location</h1>
-    <p data-aos="fade-up" data-aos-delay="200">
-      Please select your location to continue with payment
-    </p>
-
-    <div class="options">
-      <div class="option" onclick="selectLocation('india')" data-aos="zoom-in" data-aos-delay="300">
+  <!-- Main Content -->
+  <div class="choose-container">
+    <h1>Select Your Location</h1>
+    <div class="location-options">
+      <div class="location-box" onclick="window.location.href='client-details.html?region=india'">
         <h2>🇮🇳 India</h2>
-        <p>Pay securely in INR with Razorpay</p>
+        <p>Pay in INR With Razorpay.</p>
       </div>
-      <div class="option" onclick="selectLocation('foreign')" data-aos="zoom-in" data-aos-delay="400">
+
+      <div class="location-box" onclick="window.location.href='client-details.html?region=foreign'">
         <h2>🌍 Foreign</h2>
-        <p>International payment options (Coming soon)</p>
+        <p>International payments in USD or other currencies.</p>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- Footer -->
-  <footer>
-    <p>© 2025 V1XM Editz | All Rights Reserved</p>
-  </footer>
+  <!-- Footer (loaded dynamically) -->
+  <div id="footer-placeholder"></div>
 
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
-    AOS.init({ duration: 1000, once: true });
+    // Load header and footer dynamically
+    fetch("header.html")
+      .then((res) => res.text())
+      .then((data) => {
+        document.getElementById("header-placeholder").innerHTML = data;
+      });
 
-    function selectLocation(location) {
-      const params = new URLSearchParams(window.location.search);
-      const plan = params.get('plan') || 'basic';
-      if (location === 'india') {
-        window.location.href = `payment-india.html?plan=${plan}`;
-      } else {
-        alert("Foreign payment integration coming soon 🌍");
-      }
-    }
+    fetch("footer.html")
+      .then((res) => res.text())
+      .then((data) => {
+        document.getElementById("footer-placeholder").innerHTML = data;
+      });
   </script>
 </body>
 </html>
