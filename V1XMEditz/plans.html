@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plans | V1XM Editz</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="favicon.png">
+</head>
+<body>
+<!-- ===== BACKGROUND VIDEO ===== -->
+<video autoplay loop muted playsinline class="bg-video">
+  <source src="bg.mp4" type="video/mp4">
+</video>
+<div class="video-overlay"></div>
+
+  <!-- HEADER (Same as index) -->
+  <header class="main-header">
+    <div class="logo">V1XM <span>EDITZ</span></div>
+    <nav>
+      <ul>
+          <a href="index.html">Home</a></li>
+          <a href="about.html">About</a></li>
+          <a href="plans.html" class="active">Plans</a></li>
+          <a href="contact.html">contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+<section class="plans-section">
+  <h2>Choose Your Editing Plan</h2>
+  <div class="plans-container">
+    
+    <div class="plan-card">
+      <h3>Basic Plan</h3>
+      <p class="price">₹199 <span>/ video</span></p>
+      <ul>
+        <li>Simple Cut & Sync</li>
+        <li>Color Adjustments</li>
+        <li>720p Export</li>
+      </ul>
+      <a href="choose-location.html?plan=basic" class="btn">Select Plan</a>
+    </div>
+
+    <div class="plan-card popular">
+      <div class="badge">Most Popular</div>
+      <h3>Standard Plan</h3>
+      <p class="price">₹299 <span>/ video</span></p>
+      <ul>
+        <li>Cinematic Effects</li>
+        <li>Transitions + Color Grading</li>
+        <li>1080p Export</li>
+      </ul>
+      <a href="choose-location.html?plan=pro" class="btn">Select Plan</a>
+    </div>
+
+    <div class="plan-card">
+      <h3>Premium Plan</h3>
+      <p class="price">₹499 <span>/ video</span></p>
+      <ul>
+        <li>Full Cinematic Edit</li>
+        <li>SFX + VFX + Color LUT</li>
+        <li>4K Ultra Export</li>
+      </ul>
+      <a href="choose-location.html?plan=premium" class="btn">Select Plan</a>
+    </div>
+
+  </div>
+</section>
+
+  <!-- FOOTER (Load from footer.html) -->
+  <div id="footer"></div>
+  <script>
+    fetch("footer.html")
+      .then(res => res.text())
+      .then(data => document.getElementById("footer").innerHTML = data);
+  </script>
+</body>
+</html>
