@@ -36,37 +36,39 @@
   </style>
 </head>
 <body>
-  <header>
-    <nav style="padding: 20px; display: flex; justify-content: space-between; align-items: center;">
-      <h2>V1XM EDITZ</h2>
-      <div>
-        <a href="index.html" style="color: white; margin: 0 10px;">Home</a>
-        <a href="about.html" style="color: white; margin: 0 10px;">About</a>
-        <a href="plans.html" style="color: white; margin: 0 10px;">Plans</a>
-        <a href="contact.html" style="color: white; margin: 0 10px;">Contact</a>
-      </div>
-    </nav>
+   <!-- HEADER (Same as index) -->
+  <header class="main-header">
+    <div class="logo">V1XM <span>EDITZ</span></div>
+    <nav>
+      <ul>
+          <a href="index.html">Home</a></li>
+          <a href="about.html">About</a></li>
+          <a href="plans.html" class="active">Plans</a></li>
+          <a href="contact.html">contact</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
 
+        
   <div class="container">
     <h1>Choose Your Location</h1>
     <p>Select where you're from to continue</p>
     <button class="location-btn" onclick="goToDetails('india')">India 🇮🇳</button>
     <button class="location-btn" onclick="goToDetails('foreign')">Foreign 🌍</button>
   </div>
+  
+   </div>
+</section>
 
-  <footer style="margin-top: 100px; padding: 20px; background: rgba(0,0,0,0.8);">
-    <p>© 2025 V1XM EDITZ | All Rights Reserved</p>
-  </footer>
-
+  <!-- FOOTER (Load from footer.html) -->
+  <div id="footer"></div>
   <script>
-    function goToDetails(location) {
-      const params = new URLSearchParams(window.location.search);
-      const plan = params.get("plan");
-      localStorage.setItem("selectedPlan", plan);
-      localStorage.setItem("selectedLocation", location);
-      window.location.href = "client-details.html";
-    }
+    fetch("footer.html")
+      .then(res => res.text())
+      .then(data => document.getElementById("footer").innerHTML = data);
+  </script>
+
   </script>
 </body>
 </html>
