@@ -1,206 +1,206 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Payment — V1XM Editz</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Payment | V1XM Editz</title>
   <link rel="stylesheet" href="style.css">
-
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
   <style>
-    :root{
-      --accent: #d4a84a;
-      --glass: rgba(255,255,255,0.06);
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: 'Poppins',sans-serif;
-      min-height:100vh;
-      color:#fff;
-      background:#0b0b0b;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+      background: #000;
+      text-align: center;
+      overflow-x: hidden;
     }
 
-    /* background video if you want: keep video file in same folder and uncomment in body */
-    .bg-video{position:fixed;inset:0;object-fit:cover;width:100%;height:100%;z-index:-2;filter:brightness(.45)}
-    .overlay{position:fixed;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.25),rgba(0,0,0,0.6));z-index:-1}
+    #bg-video {
+      position: fixed;
+      top: 0; left: 0;
+      min-width: 100%; min-height: 100%;
+      object-fit: cover;
+      z-index: -1;
+      filter: brightness(50%);
+    }
 
-    header{width:100%;padding:18px 40px;display:flex;justify-content:space-between;align-items:center;position:relative;z-index:3}
-    .logo{color:var(--accent);font-weight:700;letter-spacing:2px}
-    nav a{color:rgba(255,255,255,0.85);margin-left:18px;text-decoration:none}
+    header {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 50px;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(5px);
+      z-index: 1000;
+    }
 
-    main.payment-wrap{width:100%;max-width:980px;padding:110px 20px 60px;z-index:2}
-    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:12px;padding:28px;box-shadow:0 10px 40px rgba(0,0,0,0.6);display:grid;grid-template-columns:1fr 380px;gap:24px;align-items:center}
+    header h1 {
+      color: gold;
+      font-size: 1.6rem;
+      letter-spacing: 2px;
+    }
 
-    .info h2{margin:0 0 8px;font-size:1.6rem;color:var(--accent)}
-    .info p{margin:0 0 16px;color:#ccc}
-    .meta{margin-top:10px;color:#ddd}
+    nav a {
+      text-decoration: none;
+      color: #fff;
+      margin-left: 20px;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+    nav a:hover { color: gold; }
 
-    /* right column: QR + UPI */
-    .paybox{background:var(--glass);padding:20px;border-radius:10px;text-align:center}
-    .qr-img{width:200px;height:200px;object-fit:contain;border-radius:8px;background:rgba(255,255,255,0.02);display:block;margin:0 auto 14px}
-    .upi-id{font-weight:700;color:var(--accent);margin-bottom:12px;word-break:break-all}
-    .utr-input{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:#fff;margin-bottom:10px}
-    .btn{background:var(--accent);color:#000;border:none;padding:10px 16px;border-radius:8px;cursor:pointer;font-weight:700}
-    .small{font-size:0.85rem;color:#bbb;margin-top:8px}
+    .payment-section {
+      margin-top: 130px;
+      padding: 50px 20px;
+    }
 
-    footer{width:100%;text-align:center;padding:20px 0;color:#aaa;margin-top:40px}
+    .payment-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+      padding: 30px;
+      max-width: 500px;
+      margin: auto;
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+      backdrop-filter: blur(6px);
+    }
 
-    /* success overlay */
-    .overlay-success{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);z-index:9999;display:none}
-    .box-success{background:#0f1720;padding:30px;border-radius:12px;text-align:center;color:#fff;max-width:420px}
-    .box-success h3{color:var(--accent);margin:0 0 12px}
+    .payment-card img {
+      width: 180px;
+      border-radius: 10px;
+      margin: 20px 0;
+    }
+
+    .upi-link {
+      display: inline-block;
+      background: gold;
+      color: black;
+      padding: 12px 30px;
+      border-radius: 8px;
+      font-weight: 600;
+      margin-top: 15px;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .upi-link:hover {
+      background: #fff;
+      color: gold;
+    }
+
+    form {
+      margin-top: 25px;
+    }
+
+    input {
+      width: 80%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid gold;
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      margin-bottom: 15px;
+      outline: none;
+      text-align: center;
+    }
+
+    button {
+      padding: 12px 25px;
+      border: none;
+      border-radius: 8px;
+      background: gold;
+      color: #000;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #fff;
+      color: gold;
+    }
+
+    footer {
+      margin-top: 60px;
+      text-align: center;
+      color: rgba(255,255,255,0.6);
+      font-size: 0.9rem;
+      padding: 30px 0;
+    }
   </style>
 </head>
 <body>
 
-  <!-- optional background video: put bg.mp4 in same folder and uncomment -->
-  <!-- <video class="bg-video" autoplay loop muted playsinline>
-    <source src="bg.mp4" type="video/mp4">
+  <!-- Background video -->
+  <video autoplay loop muted playsinline id="bg-video">
+    <source src="bg.mp4" type="video/mp4" />
   </video>
-  <div class="overlay"></div> -->
 
+  <!-- Header -->
   <header>
-    <div class="logo">V1XM EDITZ</div>
+    <h1>V1XM EDITZ</h1>
     <nav>
       <a href="index.html">Home</a>
       <a href="about.html">About</a>
       <a href="plans.html">Plans</a>
-      <a href="contact.html">Contact</a>
+      <a href="index.html#contact">Contact</a>
     </nav>
   </header>
 
-  <main class="payment-wrap">
-    <div class="card">
+  <!-- Payment Section -->
+  <section class="payment-section" data-aos="fade-up">
+    <div class="payment-card">
+      <h2>Complete Your Payment</h2>
+      <p id="plan-info" style="color:gold; margin-top:10px;"></p>
 
-      <!-- LEFT: summary & instructions -->
-      <div class="info">
-        <h2 id="titlePlan">Confirm Payment</h2>
-        <p id="clientIntro">Loading details…</p>
+      <h3>📸 Scan & Pay via QR</h3>
+      <img src="qr.png" alt="QR Code">
 
-        <div class="meta">
-          <div><strong>Plan:</strong> <span id="planName">—</span></div>
-          <div><strong>Amount:</strong> ₹ <span id="planAmount">0</span></div>
-          <div><strong>Client:</strong> <span id="clientName">—</span></div>
-          <div class="small">After making payment via UPI/QR, paste the payment UTR/Txn ID below and click <strong>Confirm Payment</strong>.</div>
-        </div>
-      </div>
+      <p>or Pay via UPI ID:</p>
+      <a id="upiLink" class="upi-link" href="#">Pay via UPI</a>
 
-      <!-- RIGHT: QR / UPI / UTR input -->
-      <div class="paybox">
-        <!-- change this image to your real QR file name (qr.png) -->
-        <img id="qrImage" src="qr.png" alt="QR Code" class="qr-img" onerror="this.style.display='none'">
-
-        <div class="upi-id" id="upiIdText">v1xmeditz@upi</div>
-
-        <input type="text" id="utr" class="utr-input" placeholder="Enter UTR / Transaction ID after payment" />
-
-        <button id="confirmBtn" class="btn">Confirm Payment</button>
-
-        <div class="small">Don't forget to save screenshot of your payment</div>
-      </div>
+      <form id="utrForm">
+        <input type="text" id="utr" placeholder="Enter Transaction / UTR Number" required>
+        <button type="submit">Submit Payment</button>
+      </form>
     </div>
-  </main>
+  </section>
 
-  <!-- Footer loaded from footer.html -->
+  <!-- Footer -->
   <div id="footer"></div>
 
-  <!-- success overlay -->
-  <div id="successOverlay" class="overlay-success">
-    <div class="box-success">
-      <h3>Payment Recorded ✅</h3>
-      <p id="successMsg">Thanks — we received your payment info. We'll verify and contact you soon.</p>
-      <button class="btn" onclick="closeSuccess()">Continue</button>
-    </div>
-  </div>
-
   <script>
-    // ====== CONFIG: change UPI ID and QR file name here if needed ======
-    const CONFIG_UPI = "v1xmeditz@upi";     // <-- replace with your real UPI id
-    const CONFIG_QR = "qr.png";             // <-- put your qr image in same folder (png/jpg)
+    // Load footer dynamically
+    fetch("footer.html")
+      .then(res => res.text())
+      .then(data => document.getElementById("footer").innerHTML = data);
 
-    // load footer (same pattern you used)
-    fetch("footer.html").then(r=>r.text()).then(html => document.getElementById('footer').innerHTML = html).catch(()=>{});
+    // Plan amount from localStorage
+    const plan = localStorage.getItem("selectedPlan") || "Standard Plan";
+    const price = localStorage.getItem("planPrice") || "999";
 
-    // Pull stored client info from localStorage
-    const storedClient = JSON.parse(localStorage.getItem("clientData") || "{}");
-    const planFromStorage = localStorage.getItem("selectedPlan") || storedClient.plan || "Basic";
-    const locationFromStorage = localStorage.getItem("selectedLocation") || storedClient.region || "India";
+    document.getElementById("plan-info").innerHTML = `${plan} - ₹${price}`;
 
-    // Plan prices (edit as needed)
-    const PRICES = { "Basic": 199, "basic":199, "Standard": 499, "standard":499, "Premium": 999, "premium":999 };
+    // Set your UPI ID below 👇
+    const upiID = "vaibhawsingh0113@okaxis"
+    const upiURL =`upi://pay?pa=${upiID}&pn=V1XM%20EDITZ&am=${price}&cu=INR`;
 
-    // Set UI values
-    document.getElementById('planName').innerText = planFromStorage;
-    const amount = PRICES[planFromStorage] || 199;
-    document.getElementById('planAmount').innerText = amount;
-    document.getElementById('clientName').innerText = storedClient.name || "Guest";
-    document.getElementById('titlePlan').innerText = `${planFromStorage} Plan — ${locationFromStorage}`;
-    document.getElementById('clientIntro').innerText = `Pay ₹${amount} via UPI / QR for your selected plan.`;
+    document.getElementById("upiLink").href = upiURL;
 
-    // UPI & QR
-    document.getElementById('upiIdText').innerText = CONFIG_UPI;
-    const qrImg = document.getElementById('qrImage');
-    qrImg.src = CONFIG_QR;
-
-    // Pre-fill utr if any earlier
-    const utrInput = document.getElementById('utr');
-    utrInput.value = "";
-
-    // Confirm button handler
-    document.getElementById('confirmBtn').addEventListener('click', function(){
-      const utr = utrInput.value.trim();
-      if(!utr || utr.length < 4){
-        alert("Please enter a valid UTR / Transaction ID (at least 4 characters).");
-        utrInput.focus();
-        return;
-      }
-
-      // Create payment record
-      const record = {
-        id: 'pay_'+Date.now(),
-        time: new Date().toISOString(),
-        plan: planFromStorage,
-        amount: amount,
-        client: { name: storedClient.name || '', email: storedClient.email || '', whatsapp: storedClient.whatsapp || '' },
-        location: locationFromStorage,
-        utr: utr
-      };
-
-      // Save to localStorage payments array
-      const payments = JSON.parse(localStorage.getItem('payments') || "[]");
-      payments.push(record);
-      localStorage.setItem('payments', JSON.stringify(payments));
-
-      // Optionally: send email via EmailJS here (if you want)
-      // e.g. emailjs.send('SERVICE_ID','TEMPLATE_ID', record)
-
-      // Show success overlay and then redirect to thankyou
-      document.getElementById('successMsg').innerText = `Payment recorded for ₹${amount}. UTR: ${utr}`;
-      document.getElementById('successOverlay').style.display = 'flex';
-
-      // after 2.5s redirect to thank you (or you can keep it on same page)
-      setTimeout(()=> {
-        // clear selected items if you want
-        localStorage.removeItem('selectedPlan');
-        localStorage.removeItem('selectedLocation');
-        // redirect to a thankyou page if exists
-        if(location.href.indexOf('file://') === -1) { // only redirect on normal server like GH pages
-          window.location.href = 'thankyou.html';
-        } else {
-          // if testing locally with file:// just close overlay
-          document.getElementById('successOverlay').style.display = 'none';
-        }
-      }, 2000);
+    // Handle UTR form
+    document.getElementById("utrForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const utr = document.getElementById("utr").value.trim();
+      if (!utr) return alert("Please enter your UTR number!");
+      alert("✅ Payment submitted successfully! Thank you for choosing V1XM Editz.");
+      window.location.href = "thankyou.html";
     });
-
-    function closeSuccess(){
-      document.getElementById('successOverlay').style.display = 'none';
-      // navigate to index or wherever
-      window.location.href = 'thankyou.html';
-    }
   </script>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>AOS.init();</script>
+
 </body>
 </html>
