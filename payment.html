@@ -1,89 +1,206 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Payment - V1XM Editz</title>
-  <link rel="stylesheet" href="style.css" />
-  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Payment — V1XM Editz</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    :root{
+      --accent: #d4a84a;
+      --glass: rgba(255,255,255,0.06);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: 'Poppins',sans-serif;
+      min-height:100vh;
+      color:#fff;
+      background:#0b0b0b;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+    }
+
+    /* background video if you want: keep video file in same folder and uncomment in body */
+    .bg-video{position:fixed;inset:0;object-fit:cover;width:100%;height:100%;z-index:-2;filter:brightness(.45)}
+    .overlay{position:fixed;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.25),rgba(0,0,0,0.6));z-index:-1}
+
+    header{width:100%;padding:18px 40px;display:flex;justify-content:space-between;align-items:center;position:relative;z-index:3}
+    .logo{color:var(--accent);font-weight:700;letter-spacing:2px}
+    nav a{color:rgba(255,255,255,0.85);margin-left:18px;text-decoration:none}
+
+    main.payment-wrap{width:100%;max-width:980px;padding:110px 20px 60px;z-index:2}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:12px;padding:28px;box-shadow:0 10px 40px rgba(0,0,0,0.6);display:grid;grid-template-columns:1fr 380px;gap:24px;align-items:center}
+
+    .info h2{margin:0 0 8px;font-size:1.6rem;color:var(--accent)}
+    .info p{margin:0 0 16px;color:#ccc}
+    .meta{margin-top:10px;color:#ddd}
+
+    /* right column: QR + UPI */
+    .paybox{background:var(--glass);padding:20px;border-radius:10px;text-align:center}
+    .qr-img{width:200px;height:200px;object-fit:contain;border-radius:8px;background:rgba(255,255,255,0.02);display:block;margin:0 auto 14px}
+    .upi-id{font-weight:700;color:var(--accent);margin-bottom:12px;word-break:break-all}
+    .utr-input{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:#fff;margin-bottom:10px}
+    .btn{background:var(--accent);color:#000;border:none;padding:10px 16px;border-radius:8px;cursor:pointer;font-weight:700}
+    .small{font-size:0.85rem;color:#bbb;margin-top:8px}
+
+    footer{width:100%;text-align:center;padding:20px 0;color:#aaa;margin-top:40px}
+
+    /* success overlay */
+    .overlay-success{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);z-index:9999;display:none}
+    .box-success{background:#0f1720;padding:30px;border-radius:12px;text-align:center;color:#fff;max-width:420px}
+    .box-success h3{color:var(--accent);margin:0 0 12px}
+  </style>
 </head>
 <body>
 
-  <!-- Background Video -->
-  <video autoplay loop muted playsinline id="bg-video" style="position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:-1;">
+  <!-- optional background video: put bg.mp4 in same folder and uncomment -->
+  <!-- <video class="bg-video" autoplay loop muted playsinline>
     <source src="bg.mp4" type="video/mp4">
   </video>
+  <div class="overlay"></div> -->
 
-  <!-- Header -->
-  <header style="text-align:center;padding:20px;background:rgba(0,0,0,0.5);color:white;">
-    <h1>V1XM Editz</h1>
-    <p>Secure Payment</p>
+  <header>
+    <div class="logo">V1XM EDITZ</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="plans.html">Plans</a>
+      <a href="contact.html">Contact</a>
+    </nav>
   </header>
 
-  <!-- Payment Section -->
-  <section style="display:flex;justify-content:center;align-items:center;min-height:80vh;">
-    <div style="background:rgba(255,255,255,0.1);padding:30px 40px;border-radius:20px;color:white;text-align:center;width:350px;">
-      <h2>Confirm Your Payment</h2>
-      <p id="plan-name" style="margin:10px 0;font-size:1.1rem;"></p>
-      <p id="plan-price" style="font-size:1.4rem;color:#ffcc00;"></p>
-      <button id="pay-btn" style="padding:12px 25px;background:#ffcc00;border:none;border-radius:8px;font-weight:bold;color:black;cursor:pointer;margin-top:20px;">Pay Now</button>
-    </div>
-  </section>
+  <main class="payment-wrap">
+    <div class="card">
 
-  <!-- Footer -->
+      <!-- LEFT: summary & instructions -->
+      <div class="info">
+        <h2 id="titlePlan">Confirm Payment</h2>
+        <p id="clientIntro">Loading details…</p>
+
+        <div class="meta">
+          <div><strong>Plan:</strong> <span id="planName">—</span></div>
+          <div><strong>Amount:</strong> ₹ <span id="planAmount">0</span></div>
+          <div><strong>Client:</strong> <span id="clientName">—</span></div>
+          <div class="small">After making payment via UPI/QR, paste the payment UTR/Txn ID below and click <strong>Confirm Payment</strong>.</div>
+        </div>
+      </div>
+
+      <!-- RIGHT: QR / UPI / UTR input -->
+      <div class="paybox">
+        <!-- change this image to your real QR file name (qr.png) -->
+        <img id="qrImage" src="qr.png" alt="QR Code" class="qr-img" onerror="this.style.display='none'">
+
+        <div class="upi-id" id="upiIdText">v1xmeditz@upi</div>
+
+        <input type="text" id="utr" class="utr-input" placeholder="Enter UTR / Transaction ID after payment" />
+
+        <button id="confirmBtn" class="btn">Confirm Payment</button>
+
+        <div class="small">Don't forget to save screenshot of your payment</div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer loaded from footer.html -->
   <div id="footer"></div>
 
+  <!-- success overlay -->
+  <div id="successOverlay" class="overlay-success">
+    <div class="box-success">
+      <h3>Payment Recorded ✅</h3>
+      <p id="successMsg">Thanks — we received your payment info. We'll verify and contact you soon.</p>
+      <button class="btn" onclick="closeSuccess()">Continue</button>
+    </div>
+  </div>
+
   <script>
-    // Load footer
-    fetch("footer.html")
-      .then(res => res.text())
-      .then(data => document.getElementById("footer").innerHTML = data);
+    // ====== CONFIG: change UPI ID and QR file name here if needed ======
+    const CONFIG_UPI = "v1xmeditz@upi";     // <-- replace with your real UPI id
+    const CONFIG_QR = "qr.png";             // <-- put your qr image in same folder (png/jpg)
 
-    // Razorpay setup
-    document.addEventListener("DOMContentLoaded", () => {
-      const plan = localStorage.getItem("selectedPlan") || "Basic";
-      const location = localStorage.getItem("selectedLocation") || "India";
+    // load footer (same pattern you used)
+    fetch("footer.html").then(r=>r.text()).then(html => document.getElementById('footer').innerHTML = html).catch(()=>{});
 
-      // 🔹 Plan-wise amount setup (in rupees)
-      const planPrices = {
-        "Basic": 299,
-        "Standard": 499,
-        "Premium": 999
+    // Pull stored client info from localStorage
+    const storedClient = JSON.parse(localStorage.getItem("clientData") || "{}");
+    const planFromStorage = localStorage.getItem("selectedPlan") || storedClient.plan || "Basic";
+    const locationFromStorage = localStorage.getItem("selectedLocation") || storedClient.region || "India";
+
+    // Plan prices (edit as needed)
+    const PRICES = { "Basic": 199, "basic":199, "Standard": 499, "standard":499, "Premium": 999, "premium":999 };
+
+    // Set UI values
+    document.getElementById('planName').innerText = planFromStorage;
+    const amount = PRICES[planFromStorage] || 199;
+    document.getElementById('planAmount').innerText = amount;
+    document.getElementById('clientName').innerText = storedClient.name || "Guest";
+    document.getElementById('titlePlan').innerText = `${planFromStorage} Plan — ${locationFromStorage}`;
+    document.getElementById('clientIntro').innerText = `Pay ₹${amount} via UPI / QR for your selected plan.`;
+
+    // UPI & QR
+    document.getElementById('upiIdText').innerText = CONFIG_UPI;
+    const qrImg = document.getElementById('qrImage');
+    qrImg.src = CONFIG_QR;
+
+    // Pre-fill utr if any earlier
+    const utrInput = document.getElementById('utr');
+    utrInput.value = "";
+
+    // Confirm button handler
+    document.getElementById('confirmBtn').addEventListener('click', function(){
+      const utr = utrInput.value.trim();
+      if(!utr || utr.length < 4){
+        alert("Please enter a valid UTR / Transaction ID (at least 4 characters).");
+        utrInput.focus();
+        return;
+      }
+
+      // Create payment record
+      const record = {
+        id: 'pay_'+Date.now(),
+        time: new Date().toISOString(),
+        plan: planFromStorage,
+        amount: amount,
+        client: { name: storedClient.name || '', email: storedClient.email || '', whatsapp: storedClient.whatsapp || '' },
+        location: locationFromStorage,
+        utr: utr
       };
 
-      // Convert to paisa for Razorpay
-      const amount = (planPrices[plan] || 299) * 100;
+      // Save to localStorage payments array
+      const payments = JSON.parse(localStorage.getItem('payments') || "[]");
+      payments.push(record);
+      localStorage.setItem('payments', JSON.stringify(payments));
 
-      // Display info
-      document.getElementById("plan-name").textContent = `Plan Selected: ${plan}`;
-      document.getElementById("plan-price").textContent = `Amount: ₹${amount / 100}`;
+      // Optionally: send email via EmailJS here (if you want)
+      // e.g. emailjs.send('SERVICE_ID','TEMPLATE_ID', record)
 
-      document.getElementById("pay-btn").addEventListener("click", () => {
-        const options = {
-          key: rzp_live_GK1dNUHZFblKFZ
-          amount: amount,
-          currency: "INR",
-          name: "V1XM Editz",
-          description: `${plan} Plan Payment`,
-          image: "logo.png", // 🔹 Optional: Add your logo
-          handler: function (response) {
-            alert("✅ Payment Successful! Payment ID: " + response.razorpay_payment_id);
-            localStorage.clear();
-            window.location.href = "thankyou.html";
-          },
-          prefill: {
-            name: localStorage.getItem("clientName") || "",
-            email: localStorage.getItem("clientEmail") || "",
-            contact: localStorage.getItem("clientPhone") || ""
-          },
-          theme: {
-            color: "#ffcc00"
-          }
-        };
-        const rzp = new Razorpay(options);
-        rzp.open();
-      });
+      // Show success overlay and then redirect to thankyou
+      document.getElementById('successMsg').innerText = `Payment recorded for ₹${amount}. UTR: ${utr}`;
+      document.getElementById('successOverlay').style.display = 'flex';
+
+      // after 2.5s redirect to thank you (or you can keep it on same page)
+      setTimeout(()=> {
+        // clear selected items if you want
+        localStorage.removeItem('selectedPlan');
+        localStorage.removeItem('selectedLocation');
+        // redirect to a thankyou page if exists
+        if(location.href.indexOf('file://') === -1) { // only redirect on normal server like GH pages
+          window.location.href = 'thankyou.html';
+        } else {
+          // if testing locally with file:// just close overlay
+          document.getElementById('successOverlay').style.display = 'none';
+        }
+      }, 2000);
     });
+
+    function closeSuccess(){
+      document.getElementById('successOverlay').style.display = 'none';
+      // navigate to index or wherever
+      window.location.href = 'thankyou.html';
+    }
   </script>
 </body>
 </html>
