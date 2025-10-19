@@ -5,202 +5,183 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Payment | V1XM Editz</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
   <style>
     body {
       font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle at top left, #2d0a0a, #422020, #2d0a0a);
       color: #fff;
-      background: #000;
-      text-align: center;
+      margin: 0;
+      padding: 0;
       overflow-x: hidden;
     }
 
-    #bg-video {
-      position: fixed;
-      top: 0; left: 0;
-      min-width: 100%; min-height: 100%;
-      object-fit: cover;
-      z-index: -1;
-      filter: brightness(50%);
-    }
-
     header {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
+      background: #2b0b0b;
+      padding: 15px 50px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 20px 50px;
-      background: rgba(0,0,0,0.5);
-      backdrop-filter: blur(5px);
-      z-index: 1000;
     }
 
     header h1 {
-      color: gold;
+      color: #ffcc00;
       font-size: 1.6rem;
-      letter-spacing: 2px;
+      letter-spacing: 1px;
     }
 
-    nav a {
-      text-decoration: none;
+    header nav a {
       color: #fff;
       margin-left: 20px;
-      font-weight: 500;
-      transition: 0.3s;
-    }
-    nav a:hover { color: gold; }
-
-    .payment-section {
-      margin-top: 130px;
-      padding: 50px 20px;
-    }
-
-    .payment-card {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 15px;
-      padding: 30px;
-      max-width: 500px;
-      margin: auto;
-      box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
-      backdrop-filter: blur(6px);
-    }
-
-    .payment-card img {
-      width: 180px;
-      border-radius: 10px;
-      margin: 20px 0;
-    }
-
-    .upi-link {
-      display: inline-block;
-      background: gold;
-      color: black;
-      padding: 12px 30px;
-      border-radius: 8px;
-      font-weight: 600;
-      margin-top: 15px;
       text-decoration: none;
-      transition: 0.3s;
+      font-weight: 500;
     }
 
-    .upi-link:hover {
-      background: #fff;
-      color: gold;
+    header nav a:hover {
+      color: #ffcc00;
     }
 
-    form {
-      margin-top: 25px;
-    }
-
-    input {
-      width: 80%;
-      padding: 12px;
-      border-radius: 8px;
-      border: 1px solid gold;
-      background: rgba(255,255,255,0.1);
-      color: #fff;
-      margin-bottom: 15px;
-      outline: none;
+    .payment-box {
+      width: 400px;
+      margin: 100px auto;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(255, 204, 0, 0.3);
+      padding: 30px;
       text-align: center;
+      border: 1px solid rgba(255,255,255,0.2);
+      backdrop-filter: blur(10px);
+    }
+
+    h2 {
+      margin-bottom: 10px;
+      color: #fff;
+    }
+
+    .plan-info {
+      font-size: 1rem;
+      color: #ffcc00;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    #qrcode {
+      margin: 20px auto;
+      width: 200px;
+      height: 200px;
+      background: #fff;
+      border-radius: 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     button {
-      padding: 12px 25px;
+      background: #ffcc00;
       border: none;
-      border-radius: 8px;
-      background: gold;
       color: #000;
+      padding: 12px 25px;
+      border-radius: 8px;
       font-weight: 600;
       cursor: pointer;
+      margin-top: 10px;
       transition: 0.3s;
     }
 
     button:hover {
-      background: #fff;
-      color: gold;
+      background: #e6b800;
+      transform: scale(1.03);
+    }
+
+    input {
+      width: 90%;
+      padding: 10px;
+      margin-top: 15px;
+      border-radius: 8px;
+      border: 1px solid #555;
+      background: rgba(0,0,0,0.2);
+      color: #fff;
+      outline: none;
+      text-align: center;
     }
 
     footer {
-      margin-top: 60px;
       text-align: center;
-      color: rgba(255,255,255,0.6);
+      color: #aaa;
+      padding: 20px;
+      background: #1a0505;
+      margin-top: 80px;
       font-size: 0.9rem;
-      padding: 30px 0;
     }
   </style>
 </head>
 <body>
 
-  <!-- Background video -->
-  <video autoplay loop muted playsinline id="bg-video">
-    <source src="bg.mp4" type="video/mp4" />
-  </video>
-
-  <!-- Header -->
   <header>
     <h1>V1XM EDITZ</h1>
     <nav>
       <a href="index.html">Home</a>
       <a href="about.html">About</a>
       <a href="plans.html">Plans</a>
-      <a href="index.html#contact">Contact</a>
+      <a href="contact.html">Contact</a>
     </nav>
   </header>
 
-  <!-- Payment Section -->
-  <section class="payment-section" data-aos="fade-up">
-    <div class="payment-card">
-      <h2>Complete Your Payment</h2>
-      <p id="plan-info" style="color:gold; margin-top:10px;"></p>
+  <div class="payment-box">
+    <h2>Complete Your Payment</h2>
+    <div class="plan-info" id="planDetails"></div>
 
-      <h3>📸 Scan & Pay via QR</h3>
-      <img src="qr.png" alt="QR Code">
+    <p>📷 Scan & Pay via QR</p>
+    <div id="qrcode"></div>
 
-      <p>or Pay via UPI ID:</p>
-      <a id="upiLink" class="upi-link" href="#">Pay via UPI</a>
+    <p style="margin-top:15px;">or Pay via UPI ID:</p>
+    <button onclick="payViaUPI()">Pay via UPI</button>
 
-      <form id="utrForm">
-        <input type="text" id="utr" placeholder="Enter Transaction / UTR Number" required>
-        <button type="submit">Submit Payment</button>
-      </form>
-    </div>
-  </section>
+    <input type="text" id="utr" placeholder="Enter Transaction / UTR Number" />
+    <button onclick="confirmPayment()">Submit Payment</button>
+  </div>
 
-  <!-- Footer -->
-  <div id="footer"></div>
+  <footer>
+    © 2025 V1XM Editz — All Rights Reserved.
+  </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
   <script>
-    // Load footer dynamically
-    fetch("footer.html")
-      .then(res => res.text())
-      .then(data => document.getElementById("footer").innerHTML = data);
+    const upiId = "vaibhawsingh0113@okaxis";
 
-    // Plan amount from localStorage
-    const plan = localStorage.getItem("selectedPlan") || "Standard Plan";
-    const price = localStorage.getItem("planPrice") || "999";
+    // get selected plan
+    const selectedPlan = JSON.parse(localStorage.getItem("selectedPlan"));
+    const planName = selectedPlan?.name || "No Plan";
+    const planPrice = selectedPlan?.price || 0;
 
-    document.getElementById("plan-info").innerHTML = `${plan} - ₹${price}`;
+    // update UI
+    document.getElementById("planDetails").innerText = `${planName} - ₹${planPrice}`;
 
-    // Set your UPI ID below 👇
-    const upiID = "vaibhawsingh0113@okaxis"
-    const upiURL =`upi://pay?pa=${upiID}&pn=V1XM%20EDITZ&am=${price}&cu=INR`;
+    // UPI URL with dynamic amount
+    const upiUrl = `upi://pay?pa=${upiId}&pn=Vaibhaw%20Singh&am=${planPrice}&cu=INR&tn=${planName}`;
 
-    document.getElementById("upiLink").href = upiURL;
-
-    // Handle UTR form
-    document.getElementById("utrForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const utr = document.getElementById("utr").value.trim();
-      if (!utr) return alert("Please enter your UTR number!");
-      alert("✅ Payment submitted successfully! Thank you for choosing V1XM Editz.");
-      window.location.href = "thankyou.html";
+    // generate QR code dynamically with correct amount
+    new QRCode(document.getElementById("qrcode"), {
+      text: upiUrl,
+      width: 200,
+      height: 200
     });
-  </script>
 
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script>AOS.init();</script>
+    // redirect to UPI app
+    function payViaUPI() {
+      window.location.href = upiUrl;
+    }
+
+    // confirm payment (UTR)
+    function confirmPayment() {
+      const utr = document.getElementById("utr").value.trim();
+      if (!utr) {
+        alert("⚠️ Please enter your Transaction / UTR number");
+        return;
+      }
+
+      alert(`✅ Payment Submitted Successfully!\nPlan: ${planName}\nAmount: ₹${planPrice}\nUTR: ${utr}`);
+    }
+  </script>
 
 </body>
 </html>
