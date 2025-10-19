@@ -19,7 +19,6 @@
     <p>Provide Your Details</p>
     <a href="index.html">Home</a></li>
   </header>
-
   <!-- Client Form -->
   <section style="display:flex;justify-content:center;align-items:center;min-height:80vh;">
     <form id="clientForm" style="background:rgba(255,255,255,0.1);padding:30px 40px;border-radius:20px;color:white;width:350px;text-align:left;">
@@ -41,8 +40,12 @@
       <input type="text" id="location" readonly style="width:100%;padding:10px;border:none;border-radius:5px;margin-bottom:20px;background:rgba(255,255,255,0.2);color:white;">
 
       <button type="submit" style="width:100%;padding:10px;border:none;border-radius:5px;background:#ffcc00;color:black;font-weight:bold;cursor:pointer;">Submit</button>
+
     </form>
   </section>
+
+  <h2>Your Selected Plan: <span id="plan-name">Loading...</span></h2>
+<h3>Price: <span id="plan-price">₹0</span></h3>
 
   <!-- Footer -->
   <div id="footer"></div>
@@ -66,6 +69,19 @@
       window.location.href = "payment.html"; // next step page
     });
   </script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const planName = localStorage.getItem("selectedPlan");
+  const planPrice = localStorage.getItem("selectedPlanPrice");
 
+  // agar plan selected hai to display karo, warna “Not selected” likho
+  document.getElementById("plan-name").textContent = planName || "Not selected";
+  document.getElementById("plan-price").textContent = planPrice ? "₹" + planPrice : "₹0";
+
+  // agar form me hidden input rakhna chahta hai to
+  document.getElementById("planInput").value = planName || "";
+  document.getElementById("priceInput").value = planPrice || "";
+});
+</script>
 </body>
 </html>
