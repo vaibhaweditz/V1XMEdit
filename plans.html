@@ -41,7 +41,7 @@
         <li>Color Adjustments</li>
         <li>720p Export</li>
       </ul>
-      <a href="choose-location.html?plan=basic" class="btn">Select Plan</a>
+     <a href="choose-location.html" onclick="selectPlan('Basic', 199)">Select</a>
     </div>
 
     <div class="plan-card popular">
@@ -53,8 +53,9 @@
         <li>Transitions + Color Grading</li>
         <li>1080p Export</li>
       </ul>
-      <a href="choose-location.html?plan=pro" class="btn">Select Plan</a>
+      <a href="choose-location.html" onclick="selectPlan('Standard', 499)">Select</a>
     </div>
+
 
     <div class="plan-card">
       <h3>Premium Plan</h3>
@@ -64,7 +65,7 @@
         <li>SFX + VFX + Color LUT</li>
         <li>4K Ultra Export</li>
       </ul>
-      <a href="choose-location.html?plan=premium" class="btn">Select Plan</a>
+    <a href="choose-location.html" onclick="selectPlan('Premium', 999)">Select</a>
     </div>
 
   </div>
@@ -77,5 +78,11 @@
       .then(res => res.text())
       .then(data => document.getElementById("footer").innerHTML = data);
   </script>
+  <script>
+function selectPlan(planName, price) {
+  localStorage.setItem("selectedPlan", planName);
+  localStorage.setItem("selectedPlanPrice", price);
+}
+</script>
 </body>
 </html>
