@@ -40,7 +40,7 @@
         <li>Color Adjustments</li>
         <li>720p Export</li>
       </ul>
-      <a href="client-details.html" onclick="selectPlan('Basic', 199)">Select</a>
+     <button onclick="selectPlan('Basic Plan', '199')">Select</button> 
     </div>
 
     <div class="plan-card popular">
@@ -52,7 +52,7 @@
         <li>Transitions + Color Grading</li>
         <li>1080p Export</li>
       </ul>
-      <a href="client-details.html" onclick="selectPlan('Standard', 299)">Select</a>
+      <button onclick="selectPlan('Standard Plan', '299')">Select</button>
     </div>
 
     <div class="plan-card">
@@ -63,7 +63,7 @@
         <li>SFX + VFX + Color LUT</li>
         <li>4K Ultra Export</li>
       </ul>
-      <a href="client-details.html" onclick="selectPlan('Premium', 499)">Select</a>
+     <button onclick="selectPlan('Premium Plan', '499')">Select</button>
     </div>
   </div>
 </section>
@@ -83,6 +83,13 @@ function selectPlan(planName, planPrice) {
   localStorage.setItem("selectedPlan", JSON.stringify(planData));
 }
 </script>
-
+<script>
+function selectPlan(name, price) {
+  localStorage.setItem("selectedPlanName", name);
+  localStorage.setItem("selectedPlanPrice", price);
+  alert(`${name} selected! Redirecting...`);
+  window.location.href = "client-details.html";
+}
+</script>
 </body>
 </html>
