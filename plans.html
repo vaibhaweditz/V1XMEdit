@@ -14,18 +14,17 @@
 </video>
 <div class="video-overlay"></div>
 
-  <!-- HEADER (Same as index) -->
+  <!-- HEADER -->
   <header class="main-header">
     <div class="logo">V1XM <span>EDITZ</span></div>
     <nav>
       <ul>
-          <a href="index.html">Home</a></li>
-          <a href="about.html">About</a></li>
-          <a href="plans.html" class="active">Plans</a></li>
-          <a href="contact.html">contact</a></li>
-        </ul>
-      </nav>
-    </div>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="plans.html" class="active">Plans</a>
+        <a href="contact.html">Contact</a>
+      </ul>
+    </nav>
   </header>
 
   <!-- MAIN CONTENT -->
@@ -41,7 +40,7 @@
         <li>Color Adjustments</li>
         <li>720p Export</li>
       </ul>
-    <a href="client-details.html" onclick="selectPlan('Basic', 199)">Select</a>
+      <a href="client-details.html" onclick="selectPlan('Basic', 199)">Select</a>
     </div>
 
     <div class="plan-card popular">
@@ -53,9 +52,8 @@
         <li>Transitions + Color Grading</li>
         <li>1080p Export</li>
       </ul>
-   <a href="client-details.html" onclick="selectPlan('Standard', 299)">Select</a>
+      <a href="client-details.html" onclick="selectPlan('Standard', 299)">Select</a>
     </div>
-
 
     <div class="plan-card">
       <h3>Premium Plan</h3>
@@ -65,30 +63,26 @@
         <li>SFX + VFX + Color LUT</li>
         <li>4K Ultra Export</li>
       </ul>
-<a href="client-details.html" onclick="selectPlan('Premium', 499)">Select</a>
-    </div>>
-
-<script>
-function selectPlan(name, price) {
-  localStorage.setItem("selectedPlan", JSON.stringify({ name, price }));
-}
-</script>
-
+      <a href="client-details.html" onclick="selectPlan('Premium', 499)">Select</a>
+    </div>
   </div>
 </section>
 
-  <!-- FOOTER (Load from footer.html) -->
-  <div id="footer"></div>
-  <script>
-    fetch("footer.html")
-      .then(res => res.text())
-      .then(data => document.getElementById("footer").innerHTML = data);
-  </script>
+<!-- FOOTER -->
+<div id="footer"></div>
 <script>
-function selectPlan(planName, price) {
-  localStorage.setItem("selectedPlan", planName);
-  localStorage.setItem("selectedPlanPrice", price);
+  fetch("footer.html")
+    .then(res => res.text())
+    .then(data => document.getElementById("footer").innerHTML = data);
+</script>
+
+<!-- ✅ Correct selectPlan() function -->
+<script>
+function selectPlan(planName, planPrice) {
+  const planData = { name: planName, price: planPrice };
+  localStorage.setItem("selectedPlan", JSON.stringify(planData));
 }
 </script>
+
 </body>
 </html>

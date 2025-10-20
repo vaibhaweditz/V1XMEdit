@@ -1,186 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Payment | V1XM Editz</title>
-  <link rel="stylesheet" href="style.css">
   <style>
     body {
-      font-family: 'Poppins', sans-serif;
-      background: radial-gradient(circle at top left, #2d0a0a, #422020, #2d0a0a);
-      color: #fff;
       margin: 0;
-      padding: 0;
-      overflow-x: hidden;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(180deg, #2b0c0c, #5a2323);
+      color: #fff;
     }
-
-    header {
-      background: #2b0b0b;
-      padding: 15px 50px;
+    nav {
+      background-color: #2b0c0c;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding: 15px 60px;
     }
-
-    header h1 {
+    nav h1 {
       color: #ffcc00;
-      font-size: 1.6rem;
-      letter-spacing: 1px;
+      font-size: 24px;
+      font-weight: bold;
     }
-
-    header nav a {
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+      margin: 0;
+    }
+    nav ul li a {
       color: #fff;
-      margin-left: 20px;
       text-decoration: none;
       font-weight: 500;
     }
-
-    header nav a:hover {
-      color: #ffcc00;
-    }
-
-    .payment-box {
-      width: 400px;
-      margin: 100px auto;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 16px;
-      box-shadow: 0 0 20px rgba(255, 204, 0, 0.3);
-      padding: 30px;
-      text-align: center;
-      border: 1px solid rgba(255,255,255,0.2);
-      backdrop-filter: blur(10px);
-    }
-
-    h2 {
-      margin-bottom: 10px;
-      color: #fff;
-    }
-
-    .plan-info {
-      font-size: 1rem;
-      color: #ffcc00;
-      margin-bottom: 20px;
-      font-weight: 600;
-    }
-
-    #qrcode {
-      margin: 20px auto;
-      width: 200px;
-      height: 200px;
-      background: #fff;
-      border-radius: 12px;
+    .payment-container {
       display: flex;
       justify-content: center;
       align-items: center;
+      height: 90vh;
     }
-
+    .payment-box {
+      background: rgba(80, 40, 40, 0.7);
+      border-radius: 15px;
+      padding: 30px 50px;
+      text-align: center;
+      box-shadow: 0 0 25px rgba(255, 204, 0, 0.3);
+    }
+    .plan-info {
+      color: #ffcc00;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .qr-section img {
+      border-radius: 10px;
+      width: 220px;
+      height: 220px;
+    }
     button {
-      background: #ffcc00;
+      background-color: #ffcc00;
       border: none;
       color: #000;
-      padding: 12px 25px;
+      font-weight: bold;
+      padding: 10px 30px;
       border-radius: 8px;
-      font-weight: 600;
       cursor: pointer;
       margin-top: 10px;
       transition: 0.3s;
     }
-
     button:hover {
-      background: #e6b800;
-      transform: scale(1.03);
+      background-color: #e6b800;
     }
-
     input {
-      width: 90%;
+      width: 100%;
       padding: 10px;
-      margin-top: 15px;
-      border-radius: 8px;
-      border: 1px solid #555;
-      background: rgba(0,0,0,0.2);
-      color: #fff;
+      border-radius: 6px;
+      border: none;
+      margin: 10px 0;
+      text-align: center;
       outline: none;
-      text-align: center;
-    }
-
-    footer {
-      text-align: center;
-      color: #aaa;
-      padding: 20px;
-      background: #1a0505;
-      margin-top: 80px;
-      font-size: 0.9rem;
     }
   </style>
 </head>
 <body>
 
-  <header>
+  <nav>
     <h1>V1XM EDITZ</h1>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="plans.html">Plans</a>
-      <a href="contact.html">Contact</a>
-    </nav>
-  </header>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Plans</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
 
-  <div class="payment-box">
-    <h2>Complete Your Payment</h2>
-    <div class="plan-info" id="planDetails"></div>
+  <div class="payment-container">
+    <div class="payment-box">
+      <h2>Complete Your Payment</h2>
+      <p class="plan-info" id="planInfo"></p>
+      <p>📷 Scan & Pay via QR</p>
+      <div class="qr-section">
+        <img id="qrImage" alt="QR Code">
+      </div>
+      <p>or Pay via UPI ID:</p>
+      <button id="upiButton">Pay via UPI</button>
 
-    <p>📷 Scan & Pay via QR</p>
-    <div id="qrcode"></div>
-
-    <p style="margin-top:15px;">or Pay via UPI ID:</p>
-    <button onclick="payViaUPI()">Pay via UPI</button>
-
-    <input type="text" id="utr" placeholder="Enter Transaction / UTR Number" />
-    <button onclick="confirmPayment()">Submit Payment</button>
+      <form id="paymentForm" style="margin-top:20px;">
+        <input type="text" id="utrNumber" placeholder="Enter Transaction / UTR Number" required>
+        <button type="submit">Submit Payment</button>
+      </form>
+    </div>
   </div>
 
-  <footer>
-    © 2025 V1XM Editz — All Rights Reserved.
-  </footer>
-
-  <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
   <script>
-    const upiId = "vaibhawsingh0113@okaxis";
+    document.addEventListener("DOMContentLoaded", () => {
+      const planName = localStorage.getItem("selectedPlanName");
+      const planPrice = localStorage.getItem("selectedPlanPrice");
 
-    // get selected plan
-    const selectedPlan = JSON.parse(localStorage.getItem("selectedPlan"));
-    const planName = selectedPlan?.name || "No Plan";
-    const planPrice = selectedPlan?.price || 0;
-
-    // update UI
-    document.getElementById("planDetails").innerText = `${planName} - ₹${planPrice}`;
-
-    // UPI URL with dynamic amount
-    const upiUrl = `upi://pay?pa=${upiId}&pn=Vaibhaw%20Singh&am=${planPrice}&cu=INR&tn=${planName}`;
-
-    // generate QR code dynamically with correct amount
-    new QRCode(document.getElementById("qrcode"), {
-      text: upiUrl,
-      width: 200,
-      height: 200
-    });
-
-    // redirect to UPI app
-    function payViaUPI() {
-      window.location.href = upiUrl;
-    }
-
-    // confirm payment (UTR)
-    function confirmPayment() {
-      const utr = document.getElementById("utr").value.trim();
-      if (!utr) {
-        alert("⚠️ Please enter your Transaction / UTR number");
+      if (!planName) {
+        alert("⚠️ No plan selected!");
+        window.location.href = "index.html";
         return;
       }
 
-      alert(`✅ Payment Submitted Successfully!\nPlan: ${planName}\nAmount: ₹${planPrice}\nUTR: ${utr}`);
-    }
+      document.getElementById("planInfo").textContent = `${planName} - ₹${planPrice}`;
+      
+      const upiID = "vaibhawsingh0113@okaxis";
+      const qrData = `upi://pay?pa=${upiID}&pn=V1XM+Editz&am=${planPrice}&cu=INR`;
+      const qrURL = `https://chart.googleapis.com/chart?cht=qr&chs=250x250&chl=${encodeURIComponent(qrData)}`;
+      document.getElementById("qrImage").src = qrURL;
+
+      document.getElementById("upiButton").onclick = () => {
+        window.location.href = qrData;
+      };
+
+      document.getElementById("paymentForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const utr = document.getElementById("utrNumber").value;
+        alert(`✅ Thank you! Payment confirmation submitted.\nUTR: ${utr}`);
+      });
+    });
   </script>
 
 </body>

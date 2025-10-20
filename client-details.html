@@ -8,18 +8,16 @@
 </head>
 <body>
 
-  <!-- Background Video -->
   <video autoplay loop muted playsinline id="bg-video" style="position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:-1;">
     <source src="bg.mp4" type="video/mp4">
   </video>
 
-  <!-- Header -->
   <header style="text-align:center;padding:20px;background:rgba(0,0,0,0.5);color:white;">
     <h1>V1XM Editz</h1>
     <p>Provide Your Details</p>
-    <a href="index.html">Home</a></li>
+    <a href="index.html" style="color:#ffcc00;">Home</a>
   </header>
-  <!-- Client Form -->
+
   <section style="display:flex;justify-content:center;align-items:center;min-height:80vh;">
     <form id="clientForm" style="background:rgba(255,255,255,0.1);padding:30px 40px;border-radius:20px;color:white;width:350px;text-align:left;">
       <h2 style="text-align:center;margin-bottom:20px;">Client Details</h2>
@@ -36,52 +34,32 @@
       <label>Plan Selected</label>
       <input type="text" id="plan" readonly style="width:100%;padding:10px;border:none;border-radius:5px;margin-bottom:10px;background:rgba(255,255,255,0.2);color:white;">
 
-      <label>Location</label>
-      <input type="text" id="location" readonly style="width:100%;padding:10px;border:none;border-radius:5px;margin-bottom:20px;background:rgba(255,255,255,0.2);color:white;">
-
       <button type="submit" style="width:100%;padding:10px;border:none;border-radius:5px;background:#ffcc00;color:black;font-weight:bold;cursor:pointer;">Submit</button>
-
     </form>
   </section>
 
-  <h2>Your Selected Plan: <span id="plan-name">Loading...</span></h2>
-<h3>Price: <span id="plan-price">₹0</span></h3>
-
-  <!-- Footer -->
-  <div id="footer"></div>
-
   <script>
-    // Footer load
-    fetch("footer.html")
-      .then(res => res.text())
-      .then(data => document.getElementById("footer").innerHTML = data);
-
-    // Load stored plan & location
     document.addEventListener("DOMContentLoaded", () => {
-      document.getElementById("plan").value = localStorage.getItem("selectedPlan") || "Not Selected";
-      document.getElementById("location").value = localStorage.getItem("selectedLocation") || "Not Selected";
+      // Plan data get from localStorage
+      const planName = localStorage.getItem("selectedPlanName") || "Not Selected";
+      const planPrice = localStorage.getItem("selectedPlanPrice") || "0";
+      document.getElementById("plan").value = `${planName} - ₹${planPrice}`;
     });
 
-    // Form submit
+    // On form submit → redirect to payment page
     document.getElementById("clientForm").addEventListener("submit", (e) => {
       e.preventDefault();
+
+      const clientData = {
+        name: document.getElementById("name").value,
+        whatsapp: document.getElementById("whatsapp").value,
+        email: document.getElementById("email").value,
+      };
+      localStorage.setItem("clientDetails", JSON.stringify(clientData));
       alert("✅ Details submitted! Redirecting to payment...");
-      window.location.href = "payment.html"; // next step page
+      window.location.href = "payment.html";
     });
   </script>
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  const planName = localStorage.getItem("selectedPlan");
-  const planPrice = localStorage.getItem("selectedPlanPrice");
 
-  // agar plan selected hai to display karo, warna “Not selected” likho
-  document.getElementById("plan-name").textContent = planName || "Not selected";
-  document.getElementById("plan-price").textContent = planPrice ? "₹" + planPrice : "₹0";
-
-  // agar form me hidden input rakhna chahta hai to
-  document.getElementById("planInput").value = planName || "";
-  document.getElementById("priceInput").value = planPrice || "";
-});
-</script>
 </body>
 </html>
