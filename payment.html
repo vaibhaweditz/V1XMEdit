@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Payment | V1XM Editz</title>
+   <link rel="icon" type="image/png" href="favicon.png">
   <style>
     body {
       margin: 0;
@@ -83,6 +84,14 @@
   </style>
 </head>
 <body>
+<!-- Background Video -->
+<video autoplay loop muted playsinline id="bg-video"
+  style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
+  <source src="bg.mp4" type="video/mp4">
+</video>
+
+<!-- Optional: Overlay (dark layer for contrast) -->
+<div style="position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:-1;"></div>
 
   <nav>
     <h1>V1XM EDITZ</h1>
@@ -141,6 +150,61 @@
       });
     });
   </script>
+<!-- 🔥 Add this at the END of your payment.html -->
+<script type="module">
+  // 1️⃣ Firebase setup
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+  import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-database.js";
 
+  const firebaseConfig = {
+    apiKey: "AIzaSyDgSsZRXmGr9GeqM5pMqAGB_cD5bq3u4zA",
+    authDomain: "v1xm-editz.firebaseapp.com",
+    databaseURL: "https://v1xm-editz-default-rtdb.firebaseio.com/",
+    projectId: "v1xm-editz",
+    storageBucket: "v1xm-editz.firebasestorage.app",
+    messagingSenderId: "865897134525",
+    appId: "1:865897134525:web:573ac7a83e43ff13fc3ad4",
+    measurementId: "G-J34XKG3F3G"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+
+  // 2️⃣ EmailJS setup
+  import emailjs from "https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js";
+  emailjs.init("4uwcU_ponA1d1vNoC"); // <-- yahan apna EmailJS public key daalna
+
+  // 3️⃣ Handle payment form submit
+  document.getElementById("paymentForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const utr = document.getElementById("utrNumber").value.trim();
+    const plan = JSON.parse(localStorage.getItem("selectedPlan"));
+    const client = JSON.parse(localStorage.getItem("clientDetails")); // details form se
+
+    if (!utr) return alert("Please enter your UTR / Transaction ID");
+
+    const paymentData = {
+      name: client?.name || "Unknown",
+      email: client?.email || "N/A",
+      whatsapp: client?.whatsapp || "N/A",
+      plan: plan?.name || "No Plan",
+      price: plan?.price || "0",
+      utr,
+      date: new Date().toLocaleString(),
+    };
+
+    // 🔹 Save in Firebase
+    const newRef = push(ref(db, "payments"));
+    await set(newRef, paymentData);
+
+    // 🔹 Send email alert
+    await emailjs.send("service_s9q7c8n", "template_k1u3ciy", paymentData);
+
+    alert("✅ Payment submitted successfully!");
+    localStorage.clear();
+    window.location.href = "thanks.html"; // optional page
+  });
+</script>
 </body>
 </html>

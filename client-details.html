@@ -1,65 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Client Details - V1XM Editz</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Client Details | V1XM Editz</title>
+  <style>
+    body {
+      background: #431f25;
+      color: white;
+      font-family: Poppins, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    .form-box {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 30px;
+      border-radius: 20px;
+      display: inline-block;
+      margin-top: 80px;
+      backdrop-filter: blur(10px);
+    }
+
+    input {
+      width: 250px;
+      margin: 10px;
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      text-align: center;
+      outline: none;
+    }
+
+    button {
+      background: #ffb400;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #ffd65a;
+    }
+
+    /* Background video */
+    video#bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -2;
+    }
+
+    /* Overlay */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: -1;
+    }
+
+    h2 {
+      margin-top: 30px;
+    }
+
+  </style>
 </head>
 <body>
-
-  <video autoplay loop muted playsinline id="bg-video" style="position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:-1;">
+  <!-- Background Video -->
+  <video autoplay loop muted playsinline id="bg-video">
     <source src="bg.mp4" type="video/mp4">
   </video>
+  <div class="overlay"></div>
 
-  <header style="text-align:center;padding:20px;background:rgba(0,0,0,0.5);color:white;">
-    <h1>V1XM Editz</h1>
-    <p>Provide Your Details</p>
-    <a href="index.html" style="color:#ffcc00;">Home</a>
-  </header>
+  <h2>Client Details</h2>
+  <p id="selectedPlan" style="font-weight:bold; color:#ffcc00; margin-bottom:10px;"></p>
 
-  <section style="display:flex;justify-content:center;align-items:center;min-height:80vh;">
-    <form id="clientForm" style="background:rgba(255,255,255,0.1);padding:30px 40px;border-radius:20px;color:white;width:350px;text-align:left;">
-      <h2 style="text-align:center;margin-bottom:20px;">Client Details</h2>
+  <div class="form-box">
+    <form id="clientForm">
+      <input type="text" id="name" placeholder="Full Name" required /><br />
+      <input type="text" id="whatsapp" placeholder="WhatsApp Number" required /><br />
+      <input type="email" id="email" placeholder="Email Address" required /><br />
+      <input type="text" id="plan" readonly /><br />
 
-      <label>Name</label>
-      <input type="text" id="name" required style="width:100%;padding:10px;border:none;border-radius:5px;margin-bottom:10px;">
+      <button type="submit">Submit</button>
 
-      <label>WhatsApp Number</label>
-      <input type="tel" id="whatsapp" required style="width:100%;padding:10px;border:none;border-radius:5px;margin-bottom:10px;">
-
-      <label>Email</label>
-      <input type="email" id="email" required style="width:100%;padding:10px;border:none;border-radius:5px;margin-bottom:10px;">
-
-      <label>Plan Selected</label>
-      <input type="text" id="plan" readonly style="width:100%;padding:10px;border:none;border-radius:5px;margin-bottom:10px;background:rgba(255,255,255,0.2);color:white;">
-
-      <button type="submit" style="width:100%;padding:10px;border:none;border-radius:5px;background:#ffcc00;color:black;font-weight:bold;cursor:pointer;">Submit</button>
+      <!-- Back to Home Button -->
+      <button type="button" onclick="window.location.href='index.html'" 
+      style="width:100%;padding:10px;border:none;border-radius:5px;background:#222;color:white;font-weight:bold;cursor:pointer;margin-top:10px;">
+      ⬅️ Back to Home
+      </button>
     </form>
-  </section>
+  </div>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      // Plan data get from localStorage
-      const planName = localStorage.getItem("selectedPlanName") || "Not Selected";
-      const planPrice = localStorage.getItem("selectedPlanPrice") || "0";
-      document.getElementById("plan").value = `${planName} - ₹${planPrice}`;
-    });
+      // Step 1: Fetch selected plan
+      const selectedPlan = JSON.parse(localStorage.getItem("selectedPlan"));
+      const planInput = document.getElementById("plan");
+      const planText = document.getElementById("selectedPlan");
 
-    // On form submit → redirect to payment page
-    document.getElementById("clientForm").addEventListener("submit", (e) => {
-      e.preventDefault();
+      if (selectedPlan && planInput) {
+        planInput.value = `${selectedPlan.name} (₹${selectedPlan.price})`;
+        if (planText) planText.textContent = "Selected Plan: " + selectedPlan.name;
+      } else {
+        planInput.value = "No plan selected";
+        if (planText) planText.textContent = "Selected Plan: Not selected";
+      }
 
-      const clientData = {
-        name: document.getElementById("name").value,
-        whatsapp: document.getElementById("whatsapp").value,
-        email: document.getElementById("email").value,
-      };
-      localStorage.setItem("clientDetails", JSON.stringify(clientData));
-      alert("✅ Details submitted! Redirecting to payment...");
-      window.location.href = "payment.html";
+      // Step 2: When form is submitted
+      const clientForm = document.getElementById("clientForm");
+      clientForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        // Save client details
+        localStorage.setItem("clientDetails", JSON.stringify({
+          name: document.getElementById("name").value,
+          whatsapp: document.getElementById("whatsapp").value,
+          email: document.getElementById("email").value,
+          plan: selectedPlan
+        }));
+
+        // Redirect to payment page
+        window.location.href = "payment.html";
+      });
     });
   </script>
-
 </body>
 </html>

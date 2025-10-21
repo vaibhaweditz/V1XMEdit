@@ -75,13 +75,13 @@
     .then(res => res.text())
     .then(data => document.getElementById("footer").innerHTML = data);
 </script>
-
-<!-- ✅ Correct selectPlan() function -->
 <script>
-function selectPlan(planName, planPrice) {
-  const planData = { name: planName, price: planPrice };
-  localStorage.setItem("selectedPlan", JSON.stringify(planData));
-}
+  function selectPlan(name, price) {
+    const selectedPlan = { name, price };
+    localStorage.setItem("selectedPlan", JSON.stringify(selectedPlan));
+    console.log("✅ Plan selected:", selectedPlan);
+  }
+</script>
 </script>
 <script>
 function selectPlan(name, price) {
