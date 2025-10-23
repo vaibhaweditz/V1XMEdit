@@ -6,49 +6,20 @@
   <title>Client Details | V1XM Editz</title>
   <style>
     body {
-      background: #431f25;
-      color: white;
-      font-family: Poppins, sans-serif;
-      text-align: center;
       margin: 0;
-      padding: 0;
-    }
-
-    .form-box {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 30px;
-      border-radius: 20px;
-      display: inline-block;
-      margin-top: 80px;
-      backdrop-filter: blur(10px);
-    }
-
-    input {
-      width: 250px;
-      margin: 10px;
-      padding: 10px;
-      border-radius: 8px;
-      border: none;
+      font-family: 'Poppins', sans-serif;
+      color: white;
       text-align: center;
-      outline: none;
+      height: 100vh;
+      overflow-x: hidden;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
-    button {
-      background: #ffb400;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    button:hover {
-      background: #ffd65a;
-    }
-
-    /* Background video */
-    video#bg-video {
+    /* Background Video */
+    #bg-video {
       position: fixed;
       top: 0;
       left: 0;
@@ -58,79 +29,128 @@
       z-index: -2;
     }
 
-    /* Overlay */
+    /* Dark Overlay */
     .overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.5);
+      background: rgba(0, 0, 0, 0.6);
       z-index: -1;
     }
 
-    h2 {
-      margin-top: 30px;
+    .container {
+      position: relative;
+      margin-top: 60px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(5px);
+      padding: 30px;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 380px;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0 0 20px rgba(255, 204, 0, 0.4);
     }
 
+    h2 {
+      color: #ffcc00;
+      margin-bottom: 15px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      margin: 10px 0;
+      text-align: center;
+      font-size: 15px;
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #ffcc00;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      color: black;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #e6b800;
+    }
+
+    .home-btn {
+      margin-top: 10px;
+      background: #222;
+      color: white;
+    }
+
+    .home-btn:hover {
+      background: #444;
+    }
+
+    footer {
+      margin-top: auto;
+    }
   </style>
 </head>
 <body>
+
   <!-- Background Video -->
   <video autoplay loop muted playsinline id="bg-video">
     <source src="bg.mp4" type="video/mp4">
   </video>
+
+  <!-- Overlay -->
   <div class="overlay"></div>
 
-  <h2>Client Details</h2>
-  <p id="selectedPlan" style="font-weight:bold; color:#ffcc00; margin-bottom:10px;"></p>
-
-  <div class="form-box">
+  <div class="container">
+    <h2>Client Details</h2>
     <form id="clientForm">
-      <input type="text" id="name" placeholder="Full Name" required /><br />
-      <input type="text" id="whatsapp" placeholder="WhatsApp Number" required /><br />
-      <input type="email" id="email" placeholder="Email Address" required /><br />
-      <input type="text" id="plan" readonly /><br />
-
+      <input type="text" id="name" placeholder="Full Name" required />
+      <input type="text" id="whatsapp" placeholder="WhatsApp Number" required />
+      <input type="email" id="email" placeholder="Email Address" required />
       <button type="submit">Submit</button>
-
-      <!-- Back to Home Button -->
-      <button type="button" onclick="window.location.href='index.html'" 
-      style="width:100%;padding:10px;border:none;border-radius:5px;background:#222;color:white;font-weight:bold;cursor:pointer;margin-top:10px;">
-      ⬅️ Back to Home
-      </button>
     </form>
+
+    <button class="home-btn" onclick="window.location.href='index.html'">
+      🏠 Back to Home
+    </button>
   </div>
 
+  <!-- Footer Load Area -->
+  <footer id="footer"></footer>
+
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      // Step 1: Fetch selected plan
+    // Load footer.html dynamically
+    document.addEventListener("DOMContentLoaded", function () {
+      fetch("footer.html")
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById("footer").innerHTML = data;
+        })
+        .catch(err => console.log("Footer load error:", err));
+
       const selectedPlan = JSON.parse(localStorage.getItem("selectedPlan"));
-      const planInput = document.getElementById("plan");
-      const planText = document.getElementById("selectedPlan");
 
-      if (selectedPlan && planInput) {
-        planInput.value = `${selectedPlan.name} (₹${selectedPlan.price})`;
-        if (planText) planText.textContent = "Selected Plan: " + selectedPlan.name;
-      } else {
-        planInput.value = "No plan selected";
-        if (planText) planText.textContent = "Selected Plan: Not selected";
-      }
-
-      // Step 2: When form is submitted
-      const clientForm = document.getElementById("clientForm");
-      clientForm.addEventListener("submit", (e) => {
+      document.getElementById("clientForm").addEventListener("submit", function (e) {
         e.preventDefault();
 
-        // Save client details
-        localStorage.setItem("clientDetails", JSON.stringify({
+        const clientDetails = {
           name: document.getElementById("name").value,
           whatsapp: document.getElementById("whatsapp").value,
           email: document.getElementById("email").value,
-          plan: selectedPlan
-        }));
+          selectedPlan: selectedPlan || null
+        };
 
-        // Redirect to payment page
+        localStorage.setItem("clientDetails", JSON.stringify(clientDetails));
         window.location.href = "payment.html";
       });
     });
