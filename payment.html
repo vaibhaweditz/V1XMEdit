@@ -97,8 +97,8 @@
     <h1>V1XM EDITZ</h1>
     <ul>
       <li><a href="index.html">Home</a></li>
-      <li><a href="#">About</a></li>
-      <li><a href="#">Plans</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="plans.html">Plans</a></li>
       <li><a href="#">Contact</a></li>
     </ul>
   </nav>
@@ -109,7 +109,8 @@
       <p class="plan-info" id="planInfo"></p>
       <p>📷 Scan & Pay via QR</p>
       <div class="qr-section">
-        <img id="qrImage" alt="QR Code">
+    <img src="cf37f279-b179-41f2-ab6a-ab773d373e16.png" alt="QR Code" style="width:200px; margin-top:10px; border-radius:10px;">
+
       </div>
       <p>or Pay via UPI ID:</p>
       <button id="upiButton">Pay via UPI</button>
@@ -150,7 +151,7 @@
       });
     });
   </script>
-<!-- 🔥 Add this at the END of your payment.html -->
+<!-- ✅ Firebase + EmailJS Working Setup -->
 <script type="module">
   // 1️⃣ Firebase setup
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
@@ -170,19 +171,18 @@
   const app = initializeApp(firebaseConfig);
   const db = getDatabase(app);
 
-  // 2️⃣ EmailJS setup
-  import emailjs from "https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js";
-  emailjs.init("4uwcU_ponA1d1vNoC"); // <-- yahan apna EmailJS public key daalna
-
-  // 3️⃣ Handle payment form submit
+  // 2️⃣ Handle form submit & save in Firebase
   document.getElementById("paymentForm").addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const utr = document.getElementById("utrNumber").value.trim();
     const plan = JSON.parse(localStorage.getItem("selectedPlan"));
-    const client = JSON.parse(localStorage.getItem("clientDetails")); // details form se
+    const client = JSON.parse(localStorage.getItem("clientDetails"));
 
-    if (!utr) return alert("Please enter your UTR / Transaction ID");
+    if (!utr) {
+      alert("⚠️ Please enter your UTR / Transaction ID");
+      return;
+    }
 
     const paymentData = {
       name: client?.name || "Unknown",
@@ -194,17 +194,43 @@
       date: new Date().toLocaleString(),
     };
 
-    // 🔹 Save in Firebase
-    const newRef = push(ref(db, "payments"));
-    await set(newRef, paymentData);
+    try {
+      const newRef = push(ref(db, "payments"));
+      await set(newRef, paymentData);
 
-    // 🔹 Send email alert
-    await emailjs.send("service_s9q7c8n", "template_k1u3ciy", paymentData);
+      // 🔥 Trigger EmailJS after saving to Firebase
+      sendEmail(paymentData);
 
-    alert("✅ Payment submitted successfully!");
-    localStorage.clear();
-    window.location.href = "thanks.html"; // optional page
+      alert("✅ Payment submitted successfully!");
+      localStorage.clear();
+      window.location.href = "thanks.html";
+    } catch (error) {
+      console.error("Error:", error);
+      alert("❌ Something went wrong while submitting payment!");
+    }
   });
+</script>
+
+<!-- ✅ EMAILJS (Non-module version) -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+  (function() {
+    emailjs.init("4uwcU_ponA1d1vNoC"); // <-- Your EmailJS public key
+  })();
+
+  function sendEmail(paymentData) {
+    emailjs.send("service_s9q7c8n", "template_k1u3ciy", {
+      name: paymentData.name,
+      email: paymentData.email,
+      whatsapp: paymentData.whatsapp,
+      plan: paymentData.plan,
+      price: paymentData.price,
+      utr: paymentData.utr,
+      date: paymentData.date
+    })
+    .then(() => console.log("📧 Email sent successfully"))
+    .catch((err) => console.error("❌ EmailJS error:", err));
+  }
 </script>
 </body>
 </html>
